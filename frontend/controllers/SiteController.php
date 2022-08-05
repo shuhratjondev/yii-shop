@@ -24,6 +24,18 @@ use frontend\forms\ContactForm;
  */
 class SiteController extends Controller
 {
+    private SignupService $signupService;
+
+    public function __construct(
+        $id, $module,
+        SignupService $signupService,
+        $config = []
+    )
+    {
+        $this->signupService = $signupService;
+        parent::__construct($id, $module, $config);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -159,7 +171,7 @@ class SiteController extends Controller
         $form = new SignupForm();
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
-                $user = (new SignupService())->signup($form);
+                $user = $this->signupService->signup($form);
                 if (Yii::$app->user->login($user)) {
                     Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
                     return $this->goHome();
