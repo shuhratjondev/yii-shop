@@ -8,10 +8,7 @@ use shop\entities\User;
 class SignupFormTest extends Unit
 {
 
-    /**
-     * @throws \yii\base\Exception
-     */
-    public function testCorrectSignup(): void
+    public function testCorrectSignup()
     {
         $user = User::requestSignup(
             $username = 'some_username',
@@ -24,7 +21,7 @@ class SignupFormTest extends Unit
         $this->assertNotEquals($password, $user->password_hash);
         $this->assertNotEmpty($user->created_at);
         $this->assertNotEmpty($user->auth_key);
-        $this->assertEquals(User::STATUS_WAIT, $user->status);
+        $this->assertEquals(User::STATUS_ACTIVE, $user->status);
 
     }
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace frontend\forms;
+namespace shop\forms\auth;
 
 use Yii;
-use common\entities\User;
+use shop\entities\User;
 use yii\base\Model;
 
 class ResendVerificationEmailForm extends Model
@@ -24,8 +24,8 @@ class ResendVerificationEmailForm extends Model
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'exist',
-                'targetClass' => '\common\entities\User',
-                'filter' => ['status' => User::STATUS_INACTIVE],
+                'targetClass' => User::class,
+                'filter' => ['status' => User::STATUS_WAIT],
                 'message' => 'There is no user with this email address.'
             ],
         ];
@@ -40,7 +40,7 @@ class ResendVerificationEmailForm extends Model
     {
         $user = User::findOne([
             'email' => $this->email,
-            'status' => User::STATUS_INACTIVE
+            'status' => User::STATUS_WAIT
         ]);
 
         if ($user === null) {
