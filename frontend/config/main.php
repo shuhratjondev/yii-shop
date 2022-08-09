@@ -20,6 +20,7 @@ return [
         'user' => [
             'identityClass' => 'shop\entities\User',
             'enableAutoLogin' => true,
+            'loginUrl' => '/auth/auth/login',
             'identityCookie' => [
                 'name' => '_identity',
                 'httpOnly' => true,

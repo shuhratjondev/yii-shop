@@ -10,6 +10,7 @@ namespace frontend\controllers\auth;
 use DomainException;
 use frontend\forms\ResetPasswordForm;
 use shop\forms\auth\PasswordResetRequestForm;
+use shop\forms\auth\ResendVerificationEmailForm;
 use shop\services\auth\PasswordResetService;
 use Yii;
 use yii\web\BadRequestHttpException;
@@ -31,7 +32,7 @@ class ResetController extends Controller
      *
      * @return mixed
      */
-    public function actionRequestPasswordReset()
+    public function actionRequest()
     {
         $form = new PasswordResetRequestForm();
 
@@ -79,6 +80,28 @@ class ResetController extends Controller
 
         return $this->render('confirm', [
             'model' => $form,
+        ]);
+    }
+
+    /**
+     * Resend verification email
+     *
+     * @return mixed
+     */
+    public function actionResend()
+    {
+        $form = new ResendVerificationEmailForm();
+
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            if ($form->sendEmail()) {
+                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+                return $this->goHome();
+            }
+            Yii::$app->session->setFlash('error', 'Sorry, we are unable to resend verification email for the provided email address.');
+        }
+
+        return $this->render('resend', [
+            'model' => $form
         ]);
     }
 

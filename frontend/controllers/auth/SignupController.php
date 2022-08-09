@@ -7,14 +7,13 @@
 namespace frontend\controllers\auth;
 
 
-use DomainException;
 use shop\forms\auth\ResendVerificationEmailForm;
 use shop\forms\auth\SignupForm;
 use shop\services\auth\SignupService;
 use Yii;
+use yii\base\Exception;
 use yii\base\InvalidArgumentException;
 use yii\filters\AccessControl;
-use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 
 class SignupController extends Controller
@@ -60,7 +59,7 @@ class SignupController extends Controller
                     Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
                     return $this->goHome();
                 }
-            } catch (DomainException $e) {
+            } catch (Exception $e) {
                 Yii::$app->session->setFlash('error', $e->getMessage());
             }
         }
@@ -86,26 +85,5 @@ class SignupController extends Controller
         return $this->goHome();
     }
 
-    /**
-     * Resend verification email
-     *
-     * @return mixed
-     */
-    public function actionResend()
-    {
-        $form = new ResendVerificationEmailForm();
-
-        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
-            if ($form->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
-                return $this->goHome();
-            }
-            Yii::$app->session->setFlash('error', 'Sorry, we are unable to resend verification email for the provided email address.');
-        }
-
-        return $this->render('resend', [
-            'model' => $form
-        ]);
-    }
 
 }

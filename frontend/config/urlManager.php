@@ -12,7 +12,12 @@ return [
     'showScriptName' => false,
     'rules' => [
         '' => 'site/index',
-        '<action:login|signup|logout>' => 'site/<action>',
+        'contact' => 'contact/index',
+        'signup' => 'auth/signup/index',
+        'signup/<action:[\w-]+>' => 'auth/signup/<action>',
+        '<action:login|logout>' => 'auth/auth/<action>',
+
+        //'<action:login|signup|logout>' => 'site/<action>',
 
         '<controller:[\w\-]+>' => '<controller/index>',
         '<controller:[\w\-]+>/<id:\d+>' => '<controller/view>',
