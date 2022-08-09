@@ -2,9 +2,11 @@
 
 namespace shop\entities;
 
+use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
@@ -23,6 +25,8 @@ use yii\web\IdentityInterface;
  * @property integer $updated_at
  * @property-read string $authKey
  * @property string $password write-only password
+ *
+ * @property Network[] $networks
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -45,6 +49,30 @@ class User extends ActiveRecord implements IdentityInterface
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
         return $user;
+    }
+
+    public static function signupByNetwork($network, $identity): User
+    {
+        $user = new self();
+        $user->created_at = time();
+        $user->status = self::STATUS_ACTIVE;
+        $user->generateAuthKey();
+        $user->networks = [
+            Network::create($network, $identity)
+        ];
+        return $user;
+    }
+
+    public function attachNetwork($network, $identity): User
+    {
+        $networks = $this->networks;
+        foreach ($networks as $current) {
+            if ($current->isFor($network, $identity)) {
+                throw new \DomainException('Network is already attached');
+            }
+        }
+        $networks[] = Network::create($network, $identity);
+        $this->networks = $networks;
     }
 
     public function confirmSignup(): void
@@ -77,9 +105,15 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->status === self::STATUS_WAIT;
     }
+
     public function isActive(): bool
     {
         return $this->status === self::STATUS_ACTIVE;
+    }
+
+    public function getNetworks(): ActiveQuery
+    {
+        return $this->hasMany(Network::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -87,7 +121,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function tableName()
     {
-        return '{{%user}}';
+        return '{{%users}}';
     }
 
     /**
@@ -97,6 +131,17 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             TimestampBehavior::className(),
+            [
+                'class' => SaveRelationsBehavior::className(),
+                'relations' => ['networks'],
+            ]
+        ];
+    }
+
+    public function transactions()
+    {
+        return [
+            self::SCENARIO_DEFAULT => self::OP_ALL
         ];
     }
 
@@ -133,7 +178,7 @@ class User extends ActiveRecord implements IdentityInterface
      * @param string $username
      * @return static|null
      */
-    public static function findByUsername($username)
+    public static function findByUsername($username): ?User
     {
         return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
     }
@@ -176,7 +221,7 @@ class User extends ActiveRecord implements IdentityInterface
      * @param string $token password reset token
      * @return bool
      */
-    public static function isPasswordResetTokenValid($token): bool
+    public static function isPasswordResetTokenValid(string $token): bool
     {
         if (empty($token)) {
             return false;
@@ -217,7 +262,7 @@ class User extends ActiveRecord implements IdentityInterface
      * @param string $password password to validate
      * @return bool if password provided is valid for current user
      */
-    public function validatePassword($password): bool
+    public function validatePassword(string $password): bool
     {
         return Yii::$app->security->validatePassword($password, $this->password_hash);
     }
@@ -259,7 +304,7 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * Removes password reset token
      */
-    private function removePasswordResetToken()
+    private function removePasswordResetToken(): void
     {
         $this->password_reset_token = null;
     }
@@ -267,7 +312,7 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * Removes password reset token
      */
-    private function removeVerificationToken()
+    private function removeVerificationToken(): void
     {
         $this->verification_token = null;
     }

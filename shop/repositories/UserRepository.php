@@ -10,14 +10,32 @@ use shop\entities\User;
 class UserRepository
 {
 
-    public function getByEmail($email): User
+
+    public function get($id): User
     {
-        return $this->getBy(['email' => $email]);
+        return $this->getBy(['id' => $id]);
     }
+
 
     public function findByUsernameOrEmail($username): User
     {
         return $this->getBy(['OR', ['email' => $username], ['username' => $username]]);
+    }
+
+    public function findByNetworkIdentity($network, $identity)
+    {
+        return User::find()
+            ->joinWith(['networks n'])
+            ->andWhere([
+                'n.network' => $network,
+                'n.identity' => $identity
+            ])
+            ->one();
+    }
+
+    public function getByEmail($email): User
+    {
+        return $this->getBy(['email' => $email]);
     }
 
     public function getByVerificationToken($token): ?User
@@ -38,7 +56,7 @@ class UserRepository
     public function save(User $user): void
     {
         if (!$user->save()) {
-            throw new \RuntimeException('Saving error.');
+            throw new \DomainException('Saving error.');
         }
     }
 

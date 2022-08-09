@@ -4,7 +4,6 @@ namespace shop\services\auth;
 
 use shop\entities\User;
 use DomainException;
-use RuntimeException;
 use shop\forms\auth\SignupForm;
 use yii\mail\MailerInterface;
 
