@@ -2,7 +2,8 @@
 
 namespace shop\repositories;
 
-use shop\entities\User;
+use DomainException;
+use shop\entities\User\User;
 
 /**
  * User: sh_abdurasulov
@@ -53,10 +54,13 @@ class UserRepository
         return (bool)User::findByPasswordResetToken($token);
     }
 
+    /**
+     * @param User $user
+     */
     public function save(User $user): void
     {
         if (!$user->save()) {
-            throw new \DomainException('Saving error.');
+            throw new DomainException('Saving error.');
         }
     }
 

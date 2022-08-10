@@ -19,7 +19,7 @@ return [
             'cookieValidationKey' => $params['cookieValidationKey']
         ],
         'user' => [
-            'identityClass' => 'shop\entities\User',
+            'identityClass' => 'shop\entities\User\User',
             'enableAutoLogin' => true,
             'identityCookie' => [
                 'name' => '_identity',
@@ -47,8 +47,8 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        'backendUrlManager' => require dirname(dirname(__DIR__)) . '/frontend/config/urlManager.php',
-        'frontendUrlManager' => require dirname(dirname(__DIR__)) . '/frontend/config/urlManager.php',
+        'backendUrlManager' => require dirname(__DIR__, 2) . '/backend/config/urlManager.php',
+        'frontendUrlManager' => require dirname(__DIR__, 2) . '/frontend/config/urlManager.php',
         'urlManager' => function () {
             return Yii::$app->get('backendUrlManager');
         },

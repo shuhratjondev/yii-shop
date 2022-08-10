@@ -1,6 +1,6 @@
 <?php
 
-namespace shop\entities;
+namespace shop\entities\User;
 
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use Yii;
@@ -33,6 +33,31 @@ class User extends ActiveRecord implements IdentityInterface
     //use InstantiateTrait;
     public const STATUS_WAIT = 0;
     public const STATUS_ACTIVE = 10;
+
+    /**
+     * @throws \yii\base\Exception
+     */
+    public static function create(string $username, string $email, string $password): self
+    {
+        $user = new self();
+        $user->username = $username;
+        $user->email = $email;
+        $user->setPassword(!empty($password) ? $password : Yii::$app->security->generateRandomString());
+        $user->created_at = time();
+        $user->status = self::STATUS_ACTIVE;
+        $user->generateAuthKey();
+        return $user;
+    }
+
+    /**
+     * @throws \yii\base\Exception
+     */
+    public function edit(string $username, string $email): void
+    {
+        $this->username = $username;
+        $this->email = $email;
+        $this->updated_at = time();
+    }
 
 
     /**
@@ -279,6 +304,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Generates "remember me" authentication key
+     * @throws \yii\base\Exception
      */
     private function generateAuthKey(): void
     {
@@ -287,6 +313,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Generates new password reset token
+     * @throws \yii\base\Exception
      */
     private function generatePasswordResetToken(): void
     {
@@ -295,6 +322,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Generates new token for email verification
+     * @throws \yii\base\Exception
      */
     private function generateEmailVerificationToken(): void
     {

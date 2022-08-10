@@ -8,7 +8,7 @@ namespace unit\entities\User;
 
 
 use Codeception\Test\Unit;
-use shop\entities\User;
+use shop\entities\User\User;
 
 class ConfirmSignupTest extends Unit
 {

@@ -4,7 +4,7 @@
  * @package shop\entities
  */
 
-namespace shop\entities;
+namespace shop\entities\User;
 
 
 use Webmozart\Assert\Assert;

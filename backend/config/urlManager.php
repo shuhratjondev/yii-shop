@@ -13,9 +13,9 @@ return [
     'rules' => [
         '<action:login|signup|logout>' => 'site/<action>',
 
-        '<controller:[\w\-]+>' => '<controller/index>',
-        '<controller:[\w\-]+>/<id:\d+>' => '<controller/view>',
-        '<controller:[\w\-]+>/<action:[\w-]+>' => '<controller>/<action>',
-        '<controller:[\w\-]+>/<action:[\w\-]+>' => '<controller>/<action>',
+        '<controller:[\w\-]>' => '<controller/index>',
+        '<controller:[\w\-]>/<id:\d+>' => '<controller/view>',
+        '<controller:[\w\-]>/<action:[\w-]+>' => '<controller>/<action>',
+        '<controller:[\w\-]>/<action:[\w\-]+>' => '<controller>/<action>',
     ],
 ];

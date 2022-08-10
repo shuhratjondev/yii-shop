@@ -8,7 +8,7 @@ namespace shop\services\auth;
 
 
 use DomainException;
-use shop\entities\User;
+use shop\entities\User\User;
 use shop\repositories\UserRepository;
 
 class NetworkService
