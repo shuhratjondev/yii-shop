@@ -4,7 +4,7 @@
  * @package shop\services\manage
  */
 
-namespace shop\services\manage;
+namespace shop\services\manage\User;
 
 
 use shop\entities\User\User;

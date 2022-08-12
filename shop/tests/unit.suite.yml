@@ -1,3 +1,4 @@
+namespace: shop\tests\unit
 actor: UnitTester
 bootstrap: false
 modules:

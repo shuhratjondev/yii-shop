@@ -1,6 +1,6 @@
 <?php
 
-namespace common\tests\unit\models;
+namespace shop\tests\unit\entities\forms;
 
 use shop\forms\auth\LoginForm;
 use Yii;

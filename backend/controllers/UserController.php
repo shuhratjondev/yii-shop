@@ -7,7 +7,7 @@ use shop\entities\User\User;
 use backend\forms\UserSearch;
 use shop\forms\manage\User\UserCreateForm;
 use shop\forms\manage\User\UserEditForm;
-use shop\services\manage\UserManageService;
+use shop\services\manage\User\UserManageService;
 use Yii;
 use yii\base\Exception;
 use yii\web\Controller;
