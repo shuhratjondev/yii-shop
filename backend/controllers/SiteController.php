@@ -2,7 +2,8 @@
 
 namespace backend\controllers;
 
-use common\forms\LoginForm;
+use shop\forms\auth\LoginForm;
+use shop\services\auth\AuthService;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -14,6 +15,14 @@ use yii\web\Response;
  */
 class SiteController extends Controller
 {
+    private AuthService $authService;
+
+    public function __construct($id, $module, AuthService $authService, $config = [])
+    {
+        parent::__construct($id, $module, $config);
+        $this->authService = $authService;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -76,17 +85,20 @@ class SiteController extends Controller
             return $this->goHome();
         }
 
-        $this->layout = 'main-login';
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goHome();
+        $form = new LoginForm();
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            try {
+                $user = $this->authService->auth($form);
+                Yii::$app->user->login($user, $form->rememberMe ? 3600 * 24 * 30 : 0);
+                return $this->goHome();
+            } catch (\DomainException $e) {
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
         }
-
-        $model->password = '';
+        $form->password = '';
 
         return $this->render('login', [
-            'model' => $model,
+            'model' => $form,
         ]);
     }
 

@@ -41,7 +41,7 @@ class TagRepository
     public function remove(Tag $tag): void
     {
         if (!$tag->delete()) {
-            throw new \RuntimeException('Saving error');
+            throw new \RuntimeException('Remove error');
         }
     }
 

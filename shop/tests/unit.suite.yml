@@ -1,7 +1,14 @@
-namespace: shop\tests\unit
-actor: UnitTester
+#namespace: shop\tests\unit
+#actor: UnitTester
+#bootstrap: false
+#modules:
+#    enabled:
+#        - Yii2:
+#            part: fixtures
+
+class_name: UnitTester
 bootstrap: false
 modules:
     enabled:
         - Yii2:
-            part: fixtures
+              part: fixtures
