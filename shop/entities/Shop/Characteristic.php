@@ -70,7 +70,11 @@ class Characteristic extends ActiveRecord
     public function behaviors()
     {
         return [
-            ArrayToJsonBehavior::class,
+            [
+                'class' => ArrayToJsonBehavior::class,
+                'arrayAttribute' => 'variants',
+                'jsonAttribute' => 'variants_json',
+            ]
         ];
     }
 

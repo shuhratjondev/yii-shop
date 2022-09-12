@@ -14,8 +14,8 @@ use yii\helpers\Json;
 
 class ArrayToJsonBehavior extends Behavior
 {
-    public string $arrayAttribute = 'variants';
-    public string $jsonAttribute = 'variants_json';
+    public string $arrayAttribute = 'array_attribute';
+    public string $jsonAttribute = 'json_attribute';
 
     public function events(): array
     {

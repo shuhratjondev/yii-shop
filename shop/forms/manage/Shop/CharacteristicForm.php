@@ -65,7 +65,7 @@ class CharacteristicForm extends Model
 
     public function getVariants()
     {
-        return preg_split('#\r\n+#i', $this->textVariants);
+        return preg_split('#[\r\n]+#i', $this->textVariants);
     }
 
 }

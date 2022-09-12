@@ -28,7 +28,7 @@ class PriceForm extends Model
     public $new;
 
 
-    public function __construct(Product $product, $config = [])
+    public function __construct(Product $product = null, $config = [])
     {
         if ($product) {
             $this->new = $product->price_new;
