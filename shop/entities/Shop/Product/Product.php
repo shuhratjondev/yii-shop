@@ -9,8 +9,10 @@ use shop\behaviors\MetaBehavior;
 use shop\entities\Meta;
 use shop\entities\Shop\Brand;
 use shop\entities\Shop\Category;
+use shop\entities\Shop\Tag;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\web\UploadedFile;
 
 /**
  * @property integer $id
@@ -21,18 +23,22 @@ use yii\db\ActiveRecord;
  * @property integer $price_old
  * @property integer $price_new
  * @property integer $rating
+ * @property integer $meta_json
  * @property integer $created_at
  *
  * @property Meta $meta
  * @property Brand $brand
  * @property Category $category
  * @property CategoryAssignment[] $categoryAssignments
+ * @property Value[] $values
+ * @property Photo[] $photos
+ * @property TagAssignment[] $tagAssignments
  */
 class Product extends ActiveRecord
 {
     public Meta $meta;
 
-    public function create($brandId, $categoryId, $code, $name, Meta $meta): self
+    public static function create($brandId, $categoryId, $code, $name, Meta $meta): self
     {
         $product = new self();
         $product->brand_id = $brandId;
@@ -55,6 +61,32 @@ class Product extends ActiveRecord
         $this->category_id = $categoryId;
     }
 
+
+    // Value
+    public function setValue($id, $value)
+    {
+        $values = $this->values;
+        foreach ($values as $val) {
+            if ($val->isForCharacteristic($id)) {
+                return;
+            }
+        }
+        $values[] = Value::create($id, $value);
+        $this->values = $values;
+    }
+
+    public function getValue($id): Value
+    {
+        $values = $this->values;
+        foreach ($values as $val) {
+            if ($val->isForCharacteristic($id)) {
+                return $val;
+            }
+        }
+        return Value::blank($id);
+    }
+
+    // Category
     public function assignCategory($id)
     {
         $assignments = $this->categoryAssignments;
@@ -84,6 +116,99 @@ class Product extends ActiveRecord
         $this->categoryAssignments = [];
     }
 
+    // Tags
+    public function assignTag($id): void
+    {
+        $assignments = $this->tagAssignments;
+        foreach ($assignments as $assignment) {
+            if ($assignment->isForTag($id)) {
+                return;
+            }
+        }
+        $assignments[] = TagAssignment::create($id);
+        $this->tagAssignments = $assignments;
+    }
+
+    public function revokeTag($id): void
+    {
+        $assignments = $this->tagAssignments;
+        foreach ($assignments as $i => $assignment) {
+            if ($assignment->isForTag($id)) {
+                unset($assignments[$i]);
+                $this->tagAssignments = $assignments;
+                return;
+            }
+        }
+        throw new \DomainException('Assignment not found.');
+    }
+
+    public function revokeTags(): void
+    {
+        $this->tagAssignments = [];
+    }
+
+    // Photo
+    public function addPhoto(UploadedFile $file)
+    {
+        $photos = $this->photos;
+        $photos[] = Photo::create($file);
+        $this->setPhotos($photos);
+    }
+
+    public function removePhoto($id)
+    {
+        $photos = $this->photos;
+        foreach ($photos as $i => $photo) {
+            if ($photo->isIdEqualTo($id)) {
+                unset($photos[$i]);
+                $this->setPhotos($photos);
+                return;
+            }
+        }
+        throw new \DomainException("Photo is not found");
+    }
+
+    public function removePhotos(): void
+    {
+        $this->setPhotos([]);
+    }
+
+    public function movePhotoUp($id)
+    {
+        $photos = $this->photos;
+        foreach ($photos as $i => $photo) {
+            if ($photo->isIdEqualTo($id) && $prev = $photos[$i - 1] ?? null) {
+                $photos[$i - 1] = $photo;
+                $photos[$i] = $prev;
+                $this->setPhotos($photos);
+            }
+        }
+        throw new \DomainException("Photo is not found");
+    }
+
+    public function movePhotoDown($id)
+    {
+        $photos = $this->photos;
+        foreach ($photos as $i => $photo) {
+            if ($photo->isIdEqualTo($id) && $next = $photos[$i + 1] ?? null) {
+                $photos[$i + 1] = $photo;
+                $photos[$i] = $next;
+                $this->setPhotos($photos);
+            }
+        }
+        throw new \DomainException("Photo is not found");
+    }
+
+    private function setPhotos(array $photos)
+    {
+        foreach ($photos as $i => $photo) {
+            $photo->setSort($i);
+        }
+        $this->photos = $photos;
+    }
+
+
+    // Relations
 
     public function getBrand(): ActiveQuery
     {
@@ -100,6 +225,21 @@ class Product extends ActiveRecord
         return $this->hasMany(CategoryAssignment::class, ['product_id' => 'id']);
     }
 
+    public function getValues(): ActiveQuery
+    {
+        return $this->hasMany(Value::class, ['product_id' => 'id']);
+    }
+
+    public function getPhotos(): ActiveQuery
+    {
+        return $this->hasMany(Photo::class, ['product_id' => 'id']);
+    }
+
+    public function getTagAssignments(): ActiveQuery
+    {
+        return $this->hasMany(TagAssignment::class, ['product_id' => 'id']);
+    }
+
     #############################
     public static function tableName(): string
     {
@@ -112,7 +252,7 @@ class Product extends ActiveRecord
             MetaBehavior::class,
             [
                 'class' => SaveRelationsBehavior::class,
-                'relations' => ['categoryAssignments']
+                'relations' => ['categoryAssignments', 'values']
             ]
         ];
     }

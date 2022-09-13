@@ -8,13 +8,18 @@ namespace shop\forms\manage\Shop\Product;
 
 
 use shop\entities\Shop\Characteristic;
+use shop\entities\Shop\Product\Value;
 use yii\base\Model;
 
+/**
+ * @property $id
+ * @property Value $value
+ */
 class ValueForm extends Model
 {
-    public $value;
+    public Value $value;
 
-    private $_characteristics;
+    private Characteristic $_characteristics;
 
     public function __construct(Characteristic $characteristic, Value $value = null, $config = [])
     {

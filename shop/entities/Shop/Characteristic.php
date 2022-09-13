@@ -21,8 +21,10 @@ use yii\db\ActiveRecord;
  * @property string $type
  * @property string $required
  * @property string $default
- * @property array $variants
  * @property integer $sort
+ * @property string $variants_json
+ *
+ * @property array $variants
  */
 class Characteristic extends ActiveRecord
 {

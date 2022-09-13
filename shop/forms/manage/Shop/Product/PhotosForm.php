@@ -12,7 +12,7 @@ use yii\web\UploadedFile;
 class PhotosForm extends Model
 {
     /* @var UploadedFile[] */
-    public $files;
+    public array $files;
 
 
     public function rules()
