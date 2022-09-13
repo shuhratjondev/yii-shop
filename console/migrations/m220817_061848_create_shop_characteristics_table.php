@@ -3,16 +3,16 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `{{%shop_characteristic}}`.
+ * Handles the creation of table `{{%shop_characteristics}}`.
  */
-class m220817_061848_create_shop_characteristic_table extends Migration
+class m220817_061848_create_shop_characteristics_table extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createTable('{{%shop_characteristic}}', [
+        $this->createTable('{{%shop_characteristics}}', [
             'id' => $this->primaryKey(),
             'name' => $this->string(),
             'type' => $this->string(),
