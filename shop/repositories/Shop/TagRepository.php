@@ -11,16 +11,21 @@ use shop\repositories\NotFoundException;
 class TagRepository
 {
 
-    public function findById($id)
+    public function findById($id): Tag
     {
         return $this->findBy(['id' => $id]);
+    }
+
+    public function findByName($name): Tag
+    {
+        return $this->findBy(['name' => $name]);
     }
 
     /**
      * @param array $condition
      * @return array|\yii\db\ActiveRecord|null
      */
-    private function findBy(array $condition)
+    private function findBy(array $condition): Tag
     {
         if ($model = Tag::find()->andWhere($condition)->limit(1)->one()) {
             return $model;

@@ -8,7 +8,7 @@ use shop\repositories\NotFoundException;
 class ProductRepository
 {
 
-    public function get($id): ?Product
+    public function get($id): Product
     {
         if (!$model = Product::findOne($id)) {
             throw new NotFoundException('Product is not found.');

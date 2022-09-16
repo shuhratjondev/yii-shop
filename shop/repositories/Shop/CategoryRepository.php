@@ -13,13 +13,13 @@ use shop\repositories\NotFoundException;
 class CategoryRepository
 {
 
-    public function get($id)
+    public function get($id): Category
     {
         return $this->getBy(['id' => $id]);
     }
 
 
-    private function getBy(array $condition)
+    private function getBy(array $condition): Category
     {
         if ($model = Category::find()->where($condition)->limit(1)->one()) {
             return $model;

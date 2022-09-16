@@ -16,21 +16,21 @@ use shop\forms\MetaForm;
  * @property TagsForm $tags
  * @property ValueForm[] $values
  */
-class ProductCreateForm extends CompositeForm
+class ProductEditeForm extends CompositeForm
 {
     public $brandId;
     public $code;
     public $name;
 
-    public function __construct($config = [])
+    private Product $_product;
+
+    public function __construct(Product $product, $config = [])
     {
-        $this->price = new PriceForm();
-        $this->meta = new MetaForm();
-        $this->categories = new CategoriesForm();
-        $this->photos = new PhotosForm();
-        $this->tags = new TagsForm();
-        $this->values = array_map(static function (Characteristic $characteristic) {
-            return new ValueForm($characteristic);
+        $this->meta = $product->meta;
+        $this->tags = new TagsForm($product);
+        $this->_product = $product;
+        $this->values = array_map(function (Characteristic $characteristic) {
+            return new ValueForm($characteristic, $this->_product->getValue($characteristic->id));
         }, Characteristic::find()->orderBy('sort')->all());
 
         parent::__construct($config);
@@ -42,13 +42,13 @@ class ProductCreateForm extends CompositeForm
             [['brandId', 'code', 'name'], 'required'],
             [['code', 'name'], 'string', 'max' => 255],
             [['brandId'], 'integer'],
-            ['code', 'unique', 'targetClass' => Product::class],
+            ['code', 'unique', 'targetClass' => Product::class, 'filter' => $this->_product ? ['<>', 'id' => $this->_product->id] : []],
         ];
     }
 
 
     protected function internalForms(): array
     {
-        return ['price', 'meta', 'photos', 'categories', 'tags', 'values'];
+        return ['meta', 'tags', 'values'];
     }
 }

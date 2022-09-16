@@ -13,12 +13,12 @@ use shop\repositories\NotFoundException;
 class BrandRepository
 {
 
-    public function get($id)
+    public function get($id): Brand
     {
         return $this->getBy(['id' => $id]);
     }
 
-    private function getBy(array $condition)
+    private function getBy(array $condition): Brand
     {
         if (($model = Brand::find()->where($condition)->limit(1)->one()) !== null) {
             return $model;
