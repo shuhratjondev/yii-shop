@@ -60,6 +60,26 @@ class CategoryManageService
         $this->categories->save($category);
     }
 
+    public function moveUp($id): void
+    {
+        $category = $this->categories->get($id);
+        $this->assertIsNotRoot($category);
+        if ($prev = $category->getPrev()->one()) {
+            $category->insertBefore($prev);
+        }
+        $this->categories->save($category);
+    }
+
+    public function moveDown($id): void
+    {
+        $category = $this->categories->get($id);
+        $this->assertIsNotRoot($category);
+        if ($next = $category->getNext()->one()) {
+            $category->insertAfter($next);
+        }
+        $this->categories->save($category);
+    }
+
     /**
      * @throws \yii\db\StaleObjectException
      */

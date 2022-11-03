@@ -7,7 +7,7 @@
 namespace shop\entities\Shop;
 
 
-use shop\behaviors\MetaBehavior;
+use shop\entities\behaviors\MetaBehavior;
 use shop\entities\Meta;
 use yii\db\ActiveRecord;
 

@@ -11,7 +11,7 @@ class TagForm extends Model
     public $name;
     public $slug;
 
-    public Tag $entity;
+    public $entity;
 
     public function __construct(Tag $entity = null, $config = [])
     {
@@ -29,7 +29,8 @@ class TagForm extends Model
             [['name', 'slug'], 'required'],
             [['name', 'slug'], 'string', 'max' => 255],
             [['slug'], SlugValidator::class],
-            [['name', 'slug'], 'unique', 'targetClass' => Tag::class],
+            [['name'], 'unique', 'targetClass' => Tag::class, 'filter' => $this->entity ? ['<>', 'name', $this->entity->name] : []],
+            [['slug'], 'unique', 'targetClass' => Tag::class, 'filter' => $this->entity ? ['<>', 'slug', $this->entity->slug] : []],
         ];
     }
 }

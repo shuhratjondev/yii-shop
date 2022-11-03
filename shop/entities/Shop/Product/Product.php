@@ -5,7 +5,7 @@ namespace shop\entities\Shop\Product;
 
 
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
-use shop\behaviors\MetaBehavior;
+use shop\entities\behaviors\MetaBehavior;
 use shop\entities\Meta;
 use shop\entities\Shop\Brand;
 use shop\entities\Shop\Category;
@@ -18,8 +18,10 @@ use yii\web\UploadedFile;
  * @property integer $id
  * @property string $code
  * @property string $name
+ * @property string $description
  * @property integer $category_id
  * @property integer $brand_id
+ * @property integer $main_photo_id
  * @property integer $price_old
  * @property integer $price_new
  * @property integer $rating
@@ -41,23 +43,25 @@ class Product extends ActiveRecord
 {
     public Meta $meta;
 
-    public static function create($brandId, $categoryId, $code, $name, Meta $meta): self
+    public static function create($brandId, $categoryId, $code, $name, $description, Meta $meta): self
     {
         $product = new self();
         $product->brand_id = $brandId;
         $product->category_id = $categoryId;
         $product->code = $code;
         $product->name = $name;
+        $product->description = $description;
         $product->meta = $meta;
         $product->created_at = time();
         return $product;
     }
 
-    public function edit($brandId, $code, $name, Meta $meta): void
+    public function edit($brandId, $code, $name, $description, Meta $meta): void
     {
         $this->brand_id = $brandId;
         $this->code = $code;
         $this->name = $name;
+        $this->description = $description;
         $this->meta = $meta;
     }
 
@@ -140,7 +144,7 @@ class Product extends ActiveRecord
     {
         $reviews = $this->reviews;
         $reviews[] = Review::create($userId, $vote, $text);
-        $this->setReviews($reviews);
+        $this->updateReviews($reviews);
     }
 
     public function editReview($id, $vote, $text): void
@@ -170,7 +174,7 @@ class Product extends ActiveRecord
         foreach ($reviews as $review) {
             if ($review->isIdEqualTo($id)) {
                 $callback($review);
-                $this->setReviews($reviews);
+                $this->updateReviews($reviews);
                 return;
             }
         }
@@ -183,14 +187,14 @@ class Product extends ActiveRecord
         foreach ($reviews as $i => $review) {
             if ($review->isIdEqualTo($id)) {
                 unset($reviews[$i]);
-                $this->setReviews($reviews);
+                $this->updateReviews($reviews);
                 return;
             }
         }
         throw new \DomainException('Review is not found');
     }
 
-    private function setReviews(array $reviews): void
+    private function updateReviews(array $reviews): void
     {
         $amount = 0;
         $total = 0;
@@ -270,7 +274,7 @@ class Product extends ActiveRecord
     {
         $photos = $this->photos;
         $photos[] = Photo::create($file);
-        $this->setPhotos($photos);
+        $this->updatePhotos($photos);
     }
 
     public function removePhoto($id): void
@@ -279,7 +283,7 @@ class Product extends ActiveRecord
         foreach ($photos as $i => $photo) {
             if ($photo->isIdEqualTo($id)) {
                 unset($photos[$i]);
-                $this->setPhotos($photos);
+                $this->updatePhotos($photos);
                 return;
             }
         }
@@ -288,17 +292,20 @@ class Product extends ActiveRecord
 
     public function removePhotos(): void
     {
-        $this->setPhotos([]);
+        $this->updatePhotos([]);
     }
 
     public function movePhotoUp($id): void
     {
         $photos = $this->photos;
         foreach ($photos as $i => $photo) {
-            if ($photo->isIdEqualTo($id) && $prev = $photos[$i - 1] ?? null) {
-                $photos[$i - 1] = $photo;
-                $photos[$i] = $prev;
-                $this->setPhotos($photos);
+            if ($photo->isIdEqualTo($id)) {
+                if ($prev = $photos[$i - 1] ?? null) {
+                    $photos[$i - 1] = $photo;
+                    $photos[$i] = $prev;
+                    $this->updatePhotos($photos);
+                }
+                return;
             }
         }
         throw new \DomainException("Photo is not found");
@@ -308,16 +315,19 @@ class Product extends ActiveRecord
     {
         $photos = $this->photos;
         foreach ($photos as $i => $photo) {
-            if ($photo->isIdEqualTo($id) && $next = $photos[$i + 1] ?? null) {
-                $photos[$i + 1] = $photo;
-                $photos[$i] = $next;
-                $this->setPhotos($photos);
+            if ($photo->isIdEqualTo($id)) {
+                if ($next = $photos[$i + 1] ?? null) {
+                    $photos[$i + 1] = $photo;
+                    $photos[$i] = $next;
+                    $this->updatePhotos($photos);
+                }
+                return;
             }
         }
         throw new \DomainException("Photo is not found");
     }
 
-    private function setPhotos(array $photos): void
+    private function updatePhotos(array $photos): void
     {
         foreach ($photos as $i => $photo) {
             $photo->setSort($i);

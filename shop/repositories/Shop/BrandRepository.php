@@ -34,4 +34,14 @@ class BrandRepository
         }
     }
 
+    /**
+     * @throws \yii\db\StaleObjectException
+     */
+    public function remove(Brand $brand): void
+    {
+        if (!$brand->delete()) {
+            throw new \DomainException('Deleting Error');
+        }
+    }
+
 }

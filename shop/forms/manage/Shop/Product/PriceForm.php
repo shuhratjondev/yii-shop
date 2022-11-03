@@ -8,7 +8,7 @@ namespace shop\forms\manage\Shop\Product;
 
 
 use shop\forms\manage\Shop\CategoryForm;
-use shop\forms\MetaForm;
+use shop\forms\manage\MetaForm;
 use yii\base\Model;
 
 /**

@@ -10,6 +10,9 @@ return [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
+        // custom
+        '@staticPath' => $params['staticPath'],
+        '@staticHost' => $params['staticHostInfo'],
     ],
     'bootstrap' => ['common\bootstrap\SetUp'],
     'vendorPath' => dirname(__DIR__, 2) . '/vendor',

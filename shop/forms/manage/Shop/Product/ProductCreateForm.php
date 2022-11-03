@@ -6,7 +6,7 @@ namespace shop\forms\manage\Shop\Product;
 use shop\entities\Shop\Characteristic;
 use shop\entities\Shop\Product\Product;
 use shop\forms\CompositeForm;
-use shop\forms\MetaForm;
+use shop\forms\manage\MetaForm;
 
 /**
  * @property PriceForm $price
@@ -21,6 +21,7 @@ class ProductCreateForm extends CompositeForm
     public $brandId;
     public $code;
     public $name;
+    public $description;
 
     public function __construct($config = [])
     {
@@ -40,7 +41,7 @@ class ProductCreateForm extends CompositeForm
     {
         return [
             [['brandId', 'code', 'name'], 'required'],
-            [['code', 'name'], 'string', 'max' => 255],
+            [['code', 'name', 'description'], 'string', 'max' => 255],
             [['brandId'], 'integer'],
             ['code', 'unique', 'targetClass' => Product::class],
         ];

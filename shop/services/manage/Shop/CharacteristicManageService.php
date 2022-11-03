@@ -16,7 +16,7 @@ class CharacteristicManageService
 
     private CharacteristicRepository $characteristics;
 
-    public function __construct($characteristics)
+    public function __construct(CharacteristicRepository $characteristics)
     {
         $this->characteristics = $characteristics;
     }
@@ -40,6 +40,7 @@ class CharacteristicManageService
     {
         /* @var Characteristic $characteristic */
         $characteristic = $this->characteristics->get($id);
+
         $characteristic->edit(
             $form->name,
             $form->type,

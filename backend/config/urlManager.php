@@ -7,11 +7,11 @@
 
 return [
     'class' => 'yii\web\urlManager',
-    'hostInfo' => $params['backendHostInfo'],
+    //'hostInfo' => $params['backendHostInfo'],
     'enablePrettyUrl' => true,
     'showScriptName' => false,
     'rules' => [
-        '<action:login|signup|logout>' => 'site/<action>',
+        '<action:login|logout>' => 'auth/<action>',
 
         '<controller:[\w\-]>' => '<controller/index>',
         '<controller:[\w\-]>/<id:\d+>' => '<controller/view>',

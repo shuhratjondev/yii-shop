@@ -28,15 +28,34 @@ class Photo extends ActiveRecord
         $this->sort = $sort;
     }
 
-    public function isIdEqualTo($id): bool
+    public function isIdEqualTo(int $id): bool
     {
-        return $this->id == $id;
+        return $this->id === $id;
     }
 
     ##################################
     public static function tableName(): string
     {
         return "{{%shop_photos}}";
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => '\yiidreamteam\upload\ImageUploadBehavior',
+                'attribute' => 'file',
+                'createThumbsOnRequest' => true,
+                'filePath' => '@staticPath/origin/products/[[attribute_product_id]]/[[pk]].[[extension]]',
+                'fileUrl' => '@staticHost/origin/products/[[attribute_product_id]]/[[pk]].[[extension]]',
+                'thumbPath' => '@staticPath/cache/products/[[attribute_product_id]]/[[profile]]_[[pk]].[[extension]]',
+                'thumbUrl' => '@staticHost/cache/products/[[attribute_product_id]]/[[profile]]_[[pk]].[[extension]]',
+                'thumbs' => [
+                    'admin' => ['width' => 100, 'height' => 70],
+                    'thumb' => ['width' => 640, 'height' => 480],
+                ],
+            ],
+        ];
     }
 
 }

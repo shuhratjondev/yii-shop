@@ -1,6 +1,6 @@
 <?php
 
-namespace shop\forms;
+namespace shop\forms\manage;
 
 use shop\entities\Meta;
 use yii\base\Model;
@@ -27,10 +27,9 @@ class MetaForm extends Model
     public function rules(): array
     {
         return [
-            [['title', 'description',], 'required'],
+            //[['title', 'description',], 'required'],
             [['title'], 'string', 'max' => 255],
             [['description', 'keywords'], 'string',],
-
         ];
     }
 

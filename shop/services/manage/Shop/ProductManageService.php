@@ -10,7 +10,7 @@ use shop\entities\Shop\Tag;
 use shop\forms\manage\Shop\Product\CategoriesForm;
 use shop\forms\manage\Shop\Product\PhotosForm;
 use shop\forms\manage\Shop\Product\ProductCreateForm;
-use shop\forms\manage\Shop\Product\ProductEditeForm;
+use shop\forms\manage\Shop\Product\ProductEditForm;
 use shop\repositories\Shop\BrandRepository;
 use shop\repositories\Shop\CategoryRepository;
 use shop\repositories\Shop\Product\ProductRepository;
@@ -61,6 +61,7 @@ class ProductManageService
             $category->id,
             $form->code,
             $form->name,
+            $form->description,
             new Meta(
                 $form->meta->title,
                 $form->meta->description,
@@ -111,7 +112,7 @@ class ProductManageService
     /**
      * @throws \Exception
      */
-    public function edit($id, ProductEditeForm $form): void
+    public function edit($id, ProductEditForm $form): void
     {
         $product = $this->products->get($id);
         $brand = $this->brands->get($form->brandId);
@@ -120,6 +121,7 @@ class ProductManageService
             $brand->id,
             $form->code,
             $form->name,
+            $form->description,
             new Meta(
                 $form->meta->title,
                 $form->meta->description,

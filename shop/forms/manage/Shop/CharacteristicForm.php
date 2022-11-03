@@ -33,10 +33,12 @@ class CharacteristicForm extends Model
     public $textVariants;
     public $sort;
 
-    private Characteristic $_characteristic;
+    private $_characteristic;
 
-    public function __construct(Characteristic $characteristic, $config = [])
+    public function __construct(Characteristic $characteristic = null, $config = [])
     {
+        parent::__construct($config);
+
         if ($characteristic) {
             $this->setAttributes($characteristic->getAttributes());
             $this->textVariants = implode(PHP_EOL, $characteristic->variants);
@@ -44,7 +46,6 @@ class CharacteristicForm extends Model
         } else {
             $this->sort = Characteristic::find()->max('sort') + 1;
         }
-        parent::__construct($config);
     }
 
     public function rules()
@@ -55,10 +56,10 @@ class CharacteristicForm extends Model
             [['default'], 'string', 'max' => 255],
             [['textVariants'], 'string'],
             [['sort'], 'integer'],
-            [
-                ['name'], 'unique', 'targetClass' => Characteristic::class,
-                'filter' => $this->_characteristic ? ['<>', 'id' => $this->_characteristic->id] : []
-            ],
+//            [
+//                ['name'], 'unique', 'targetClass' => Characteristic::class,
+//                'filter' => $this->_characteristic ? ['<>', 'id', $this->_characteristic->id] : []
+//            ],
 
         ];
     }

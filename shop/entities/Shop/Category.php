@@ -8,7 +8,7 @@ namespace shop\entities\Shop;
 
 
 use paulzi\nestedsets\NestedSetsBehavior;
-use shop\behaviors\MetaBehavior;
+use shop\entities\behaviors\MetaBehavior;
 use shop\entities\Meta;
 use shop\entities\Shop\queries\CategoryQuery;
 use yii\db\ActiveRecord;
@@ -20,11 +20,15 @@ use yii\db\ActiveRecord;
  * @author sh_abdurasulov
  * @package shop\entities\Shop
  *
- * @property $id
- * @property $name
- * @property $slug
- * @property $title
- * @property $description
+ * @property int $id
+ * @property string $name
+ * @property string $slug
+ * @property string|null $title
+ * @property string|null $description
+ * @property string $meta_json
+ * @property int $lft
+ * @property int $rgt
+ * @property int $depth
  *
  * @property Meta $meta
  * @property Category $parent

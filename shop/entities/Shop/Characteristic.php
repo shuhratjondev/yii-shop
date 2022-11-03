@@ -7,8 +7,8 @@
 namespace shop\entities\Shop;
 
 
-use shop\behaviors\ArrayToJsonBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\Json;
 
 /**
  * Class Characteristic
@@ -24,7 +24,7 @@ use yii\db\ActiveRecord;
  * @property integer $sort
  * @property string $variants_json
  *
- * @property array $variants
+ * @property $variants
  */
 class Characteristic extends ActiveRecord
 {
@@ -69,15 +69,16 @@ class Characteristic extends ActiveRecord
         return '{{%shop_characteristics}}';
     }
 
-    public function behaviors()
+    public function afterFind()
     {
-        return [
-            [
-                'class' => ArrayToJsonBehavior::class,
-                'arrayAttribute' => 'variants',
-                'jsonAttribute' => 'variants_json',
-            ]
-        ];
+        $this->variants = Json::decode($this->getAttribute('variants_json'));
+        parent::afterFind();
+    }
+
+    public function beforeSave($insert): bool
+    {
+        $this->setAttribute('variants_json', Json::encode($this->variants));
+        return parent::beforeSave($insert);
     }
 
 }

@@ -35,6 +35,14 @@
                 'items' => [
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
                     ['label' => 'User', 'url' => ['/user'], 'active' => $this->context->id === 'user'],
+                    ['label' => 'Shop', 'icon' => 'folder',
+                        'items' => [
+                            ['label' => 'Brand', 'icon' => 'file-o', 'url' => ['/shop/brand'], 'active' => $this->context->id === 'shop/brand'],
+                            ['label' => 'Tag', 'icon' => 'file-o', 'url' => ['/shop/tag'], 'active' => $this->context->id === 'shop/tag'],
+                            ['label' => 'Category', 'icon' => 'file-o', 'url' => ['/shop/category'], 'active' => $this->context->id === 'shop/category'],
+
+                        ]
+                    ],
                     ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
                 ],
             ]

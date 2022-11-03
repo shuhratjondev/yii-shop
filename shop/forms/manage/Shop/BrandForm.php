@@ -8,7 +8,7 @@ namespace shop\forms\manage\Shop;
 
 use shop\entities\Shop\Brand;
 use shop\forms\CompositeForm;
-use shop\forms\MetaForm;
+use shop\forms\manage\MetaForm;
 use shop\validators\SlugValidator;
 
 /**
@@ -16,23 +16,23 @@ use shop\validators\SlugValidator;
  *
  * @author sh_abdurasulov
  * @package shop\forms\Shop
- * @property $meta
+ * @property MetaForm $meta
  */
 class BrandForm extends CompositeForm
 {
 
-    public string $name;
-    public string $slug;
+    public $name;
+    public $slug;
 
-    private Brand $_brand;
+    private ?Brand $_brand;
 
     public function __construct(Brand $brand = null, $config = [])
     {
-        if ($brand) {
-            $this->name = $brand->name;
-            $this->slug = $brand->slug;
-            $this->meta = new MetaForm($brand->meta);
-            $this->_brand = $brand;
+        $this->_brand = $brand;
+        if ($this->_brand) {
+            $this->name = $this->_brand->name;
+            $this->slug = $this->_brand->slug;
+            $this->meta = new MetaForm($this->_brand->meta);
         } else {
             $this->meta = new MetaForm();
         }
@@ -47,7 +47,7 @@ class BrandForm extends CompositeForm
             [['slug'], SlugValidator::class],
             [
                 ['name', 'slug'], 'unique', 'targetClass' => Brand::class,
-                'filter' => $this->_brand ? ['<>', 'id' => $this->_brand->id] : []
+                'filter' => $this->_brand ? ['<>', 'id', $this->_brand->id] : []
             ]
         ];
     }

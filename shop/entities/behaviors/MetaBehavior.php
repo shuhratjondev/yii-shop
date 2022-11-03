@@ -4,13 +4,14 @@
  * @package shop\behaviors
  */
 
-namespace shop\behaviors;
+namespace shop\entities\behaviors;
 
 
 use shop\entities\Meta;
 use yii\base\Behavior;
 use yii\base\Event;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 
 class MetaBehavior extends Behavior
@@ -28,23 +29,30 @@ class MetaBehavior extends Behavior
         ];
     }
 
+    /**
+     * @throws \Exception
+     */
     public function onAfterFind(Event $event): void
     {
-        /* @var ActiveRecord $brand */
-        $brand = $event->sender;
-        $meta = Json::decode($brand->getAttribute($this->jsonAttribute));
-        $brand->{$this->attribute} = new Meta($meta['title'], $meta['description'], $meta['keywords']);
+        /* @var ActiveRecord $model */
+        $model = $event->sender;
+        $meta = Json::decode($model->getAttribute($this->jsonAttribute));
+        $model->{$this->attribute} = new Meta(
+            ArrayHelper::getValue($meta, 'title'),
+            ArrayHelper::getValue($meta, 'description'),
+            ArrayHelper::getValue($meta, 'keywords')
+        );
     }
 
     public function onBeforeSave(Event $event): void
     {
-        /* @var ActiveRecord $brand */
-        $brand = $event->sender;
+        /* @var ActiveRecord $model */
+        $model = $event->sender;
 
-        $brand->setAttribute($this->jsonAttribute, Json::encode([
-            'title' => $brand->{$this->attribute}->title,
-            'description' => $brand->{$this->attribute}->description,
-            'keywords' => $brand->{$this->attribute}->keywords,
+        $model->setAttribute($this->jsonAttribute, Json::encode([
+            'title' => $model->{$this->attribute}->title,
+            'description' => $model->{$this->attribute}->description,
+            'keywords' => $model->{$this->attribute}->keywords,
         ]));
     }
 

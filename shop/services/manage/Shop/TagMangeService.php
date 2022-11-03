@@ -42,6 +42,20 @@ class TagMangeService
     }
 
     /**
+     * @param $id
+     * @param TagForm $form
+     */
+    public function edit($id, TagForm $form): void
+    {
+        $tag = $this->tags->findById($id);
+        $tag->edit(
+            $form->name,
+            $form->slug ?: Inflector::slug($form->name)
+        );
+        $this->tags->save($tag);
+    }
+
+    /**
      * @throws \yii\db\StaleObjectException
      */
     public function remove($id): void
