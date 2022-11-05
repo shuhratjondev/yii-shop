@@ -40,6 +40,8 @@
                             ['label' => 'Brand', 'icon' => 'file-o', 'url' => ['/shop/brand'], 'active' => $this->context->id === 'shop/brand'],
                             ['label' => 'Tag', 'icon' => 'file-o', 'url' => ['/shop/tag'], 'active' => $this->context->id === 'shop/tag'],
                             ['label' => 'Category', 'icon' => 'file-o', 'url' => ['/shop/category'], 'active' => $this->context->id === 'shop/category'],
+                            ['label' => 'Characteristic', 'icon' => 'file-o', 'url' => ['/shop/characteristic'], 'active' => $this->context->id === 'shop/characteristic'],
+                            ['label' => 'Product', 'icon' => 'file-o', 'url' => ['/shop/product'], 'active' => $this->context->id === 'shop/product'],
 
                         ]
                     ],

@@ -2,6 +2,7 @@
 
 namespace backend\controllers\shop;
 
+use shop\forms\manage\Shop\Product\PriceForm;
 use shop\forms\manage\Shop\Product\ProductCreateForm;
 use shop\forms\manage\Shop\Product\ProductEditForm;
 use shop\services\manage\Shop\ProductManageService;
@@ -68,8 +69,9 @@ class ProductController extends Controller
      */
     public function actionView($id)
     {
+        $product = $this->findModel($id);
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'product' => $product,
         ]);
     }
 
@@ -89,6 +91,14 @@ class ProductController extends Controller
                 return $this->redirect(['view', 'id' => $model->id]);
             } catch (\Exception $e) {
                 Yii::$app->errorHandler->logException($e);
+                echo "<pre>";
+                var_dump($e->getMessage());
+                var_dump($e->getFile());
+                var_dump($e->getLine());
+                var_dump($e->getTraceAsString());
+                echo "</pre>";
+                die();
+
                 Yii::$app->session->setFlash('error', $e->getMessage());
             }
         }
@@ -124,6 +134,67 @@ class ProductController extends Controller
             'product' => $model,
         ]);
     }
+
+    /**
+     * @throws NotFoundHttpException
+     */
+    public function actionPrice($id)
+    {
+        $model = $this->findModel($id);
+        $form = new PriceForm($model);
+
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            try {
+                $this->service->changePrice($model->id, $form);
+                return $this->redirect(['view', 'id' => $model->id]);
+            } catch (\Exception $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
+        }
+        return $this->render('price', [
+            'model' => $form,
+            'product' => $model,
+        ]);
+    }
+
+    /**
+     * @param $id
+     * @param $photo_id
+     * @return \yii\web\Response
+     */
+    public function actionDeletePhoto($id, $photo_id)
+    {
+        try {
+            $this->service->removePhoto($id, $photo_id);
+        } catch (\DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+        return $this->redirect(['view', 'id' => $id, '#' => 'photos']);
+    }
+
+    /**
+     * @param $id
+     * @param $photo_id
+     * @return \yii\web\Response
+     */
+    public function actionMoveUpPhoto($id, $photo_id)
+    {
+        $this->service->movePhotoUp($id, $photo_id);
+        return $this->redirect(['view', 'id' => $id, '#' => 'photos']);
+    }
+
+    /**
+     * @param $id
+     * @param $photo_id
+     * @return \yii\web\Response
+     */
+    public function actionMoveDownPhoto($id, $photo_id)
+    {
+        $this->service->movePhotoDown($id, $photo_id);
+        return $this->redirect(['view', 'id' => $id, '#' => 'photos']);
+    }
+
 
     /**
      * Deletes an existing Product model.

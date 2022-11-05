@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\forms\shop;
+namespace backend\forms\Shop;
 
 use Yii;
 use yii\base\Model;
@@ -10,8 +10,21 @@ use shop\entities\Shop\Product\Product;
 /**
  * ProductSearch represents the model behind the search form of `shop\entities\Shop\Product\Product`.
  */
-class ProductSearch extends Product
+class ProductSearch extends Model
 {
+    public $id;
+    public $code;
+    public $name;
+    public $description;
+    public $category_id;
+    public $brand_id;
+    public $main_photo_id;
+    public $price_old;
+    public $price_new;
+    public $rating;
+    public $meta_json;
+    public $created_at;
+
     /**
      * @inheritdoc
      */

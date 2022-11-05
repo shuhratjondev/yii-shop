@@ -9,6 +9,7 @@ use shop\entities\Shop\Product\Product;
 use shop\entities\Shop\Tag;
 use shop\forms\manage\Shop\Product\CategoriesForm;
 use shop\forms\manage\Shop\Product\PhotosForm;
+use shop\forms\manage\Shop\Product\PriceForm;
 use shop\forms\manage\Shop\Product\ProductCreateForm;
 use shop\forms\manage\Shop\Product\ProductEditForm;
 use shop\repositories\Shop\BrandRepository;
@@ -83,7 +84,7 @@ class ProductManageService
         }
 
         // photos
-        foreach ($form->photos as $photo) {
+        foreach ($form->photos->files as $photo) {
             $product->addPhoto($photo);
         }
 
@@ -165,6 +166,14 @@ class ProductManageService
             $category = $this->categories->get($otherId);
             $product->assignCategory($category->id);
         }
+        $this->products->save($product);
+    }
+
+    // Price
+    public function changePrice($id, PriceForm $form)
+    {
+        $product = $this->products->get($id);
+        $product->setPrice($form->new, $form->old);
         $this->products->save($product);
     }
 

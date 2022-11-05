@@ -12,7 +12,7 @@ $this->title = 'Categories';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="category-index box box-primary">
-    <?php Pjax::begin(); ?>
+    <?php //Pjax::begin(); ?>
     <div class="box-header with-border">
         <?= Html::a('Create Category', ['create'], ['class' => 'btn btn-success']) ?>
     </div>
@@ -54,5 +54,5 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]); ?>
     </div>
-    <?php Pjax::end(); ?>
+    <?php // Pjax::end(); ?>
 </div>

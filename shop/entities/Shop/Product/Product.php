@@ -32,9 +32,11 @@ use yii\web\UploadedFile;
  * @property Brand $brand
  * @property Category $category
  * @property CategoryAssignment[] $categoryAssignments
+ * @property Category[] $categories
  * @property Value[] $values
  * @property Photo[] $photos
  * @property TagAssignment[] $tagAssignments
+ * @property Tag[] $tags
  * @property RelatedProduct[] $relatedAssignments
  * @property Modification[] $modifications
  * @property Review[] $reviews
@@ -379,6 +381,11 @@ class Product extends ActiveRecord
         return $this->hasMany(CategoryAssignment::class, ['product_id' => 'id']);
     }
 
+    public function getCategories(): ActiveQuery
+    {
+        return $this->hasMany(Category::class, ['id' => 'category_id'])->via('categoryAssignments');
+    }
+
     public function getValues(): ActiveQuery
     {
         return $this->hasMany(Value::class, ['product_id' => 'id']);
@@ -399,6 +406,11 @@ class Product extends ActiveRecord
         return $this->hasMany(TagAssignment::class, ['product_id' => 'id']);
     }
 
+    public function getTags()
+    {
+        return $this->hasMany(Category::class, ['id' => 'tag_id'])->via('tagAssignments');
+    }
+
     public function getRelatedAssignments(): ActiveQuery
     {
         return $this->hasMany(RelatedProduct::class, ['related_id' => 'id']);
@@ -408,6 +420,7 @@ class Product extends ActiveRecord
     {
         return $this->hasMany(Review::class, ['product_id' => 'id']);
     }
+
 
     #############################
     public static function tableName(): string

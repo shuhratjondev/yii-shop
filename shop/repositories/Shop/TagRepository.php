@@ -16,9 +16,9 @@ class TagRepository
         return $this->findBy(['id' => $id]);
     }
 
-    public function findByName($name): Tag
+    public function findByName($name): ?Tag
     {
-        return $this->findBy(['name' => $name]);
+        return Tag::findOne(['name' => $name]);
     }
 
     /**
@@ -30,7 +30,7 @@ class TagRepository
         if ($model = Tag::find()->andWhere($condition)->limit(1)->one()) {
             return $model;
         }
-        throw new NotFoundException('Tag not found.');
+        throw new NotFoundException('Tag not found.' . json_encode($condition));
     }
 
     public function save(Tag $tag): void

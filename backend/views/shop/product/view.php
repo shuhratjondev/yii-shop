@@ -1,20 +1,24 @@
 <?php
 
+use shop\entities\Shop\Product\Value;
+use shop\helpers\PriceHelper;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model shop\entities\Shop\Product\Product */
+/* @var $product shop\entities\Shop\Product\Product */
 
-$this->title = $model->name;
+$this->title = $product->name;
 $this->params['breadcrumbs'][] = ['label' => 'Products', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="product-view box box-primary">
+<div class="product-view">
     <div class="box-header">
         <?= Html::a('List', ['index'], ['class' => 'btn btn-info']) ?>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Create', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Update', ['update', 'id' => $product->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['delete', 'id' => $product->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -22,23 +26,78 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </div>
-    <div class="box-body table-responsive no-padding">
-        <?= DetailView::widget([
-            'model' => $model,
-            'attributes' => [
-                'id',
-                'category_id',
-                'brand_id',
-                'main_photo_id',
-                'code',
-                'name',
-                'description:ntext',
-                'price_old',
-                'price_new',
-                'rating',
-                'meta_json:ntext',
-                'created_at:datetime',
-            ],
-        ]) ?>
+
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-default">
+                <div class="box-header with-border">Common</div>
+                <div class="box-body">
+                    <?= DetailView::widget([
+                        'model' => $product,
+                        'attributes' => [
+                            'id',
+                            [
+                                'attribute' => 'brand_id',
+                                'value' => ArrayHelper::getValue($product, 'brand.name'),
+                                'format' => 'raw',
+                            ],
+                            'name',
+                            'code',
+                            [
+                                'attribute' => 'description',
+                                'format' => 'ntext',
+                            ],
+                            [
+                                'attribute' => 'price_new',
+                                'value' => PriceHelper::format($product->price_new),
+                            ],
+                            [
+                                'attribute' => 'price_old',
+                                'value' => PriceHelper::format($product->price_old),
+                            ],
+                            [
+                                'attribute' => 'category_id',
+                                'value' => ArrayHelper::getValue($product, 'category.name')
+                            ],
+                            [
+                                'label' => 'Other Categories',
+                                'value' => implode(', ', ArrayHelper::getColumn($product->categories, 'name'))
+                            ],
+                            [
+                                'label' => 'Tags',
+                                'value' => implode(', ', ArrayHelper::getColumn($product->tags, 'name'))
+                            ],
+                            'created_at:datetime',
+                        ],
+                    ]) ?>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="box box-default">
+                <div class="box-header with-border">Characteristics</div>
+                <div class="box-body">
+                    <?= DetailView::widget([
+                        'model' => $product,
+                        'attributes' => array_map(function (Value $value){
+                            return [
+                                'label' => $value->characteristic->name,
+                                'value' => $value->value,
+                            ];
+                        }, $product->values)
+                    ]) ?>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <div class="box box-default">
+        <div class="box-header with-border">Description</div>
+        <div class="box-body">
+            <?= Yii::$app->formatter->asNtext($product->description) ?>
+        </div>
+    </div>
+
+
 </div>

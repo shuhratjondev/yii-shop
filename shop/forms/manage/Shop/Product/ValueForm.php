@@ -17,15 +17,16 @@ use yii\base\Model;
  */
 class ValueForm extends Model
 {
-    public Value $value;
+    public $value;
 
     private Characteristic $_characteristics;
 
     public function __construct(Characteristic $characteristic, Value $value = null, $config = [])
     {
         $this->_characteristics = $characteristic;
+
         if ($value) {
-            $this->value = $value;
+            $this->value = $value->value;
         }
         parent::__construct($config);
     }
@@ -37,8 +38,13 @@ class ValueForm extends Model
             $this->_characteristics->isString() ? ['value', 'string', 'max' => 255] : false,
             $this->_characteristics->isInteger() ? ['value', 'integer'] : false,
             $this->_characteristics->isFloat() ? ['value', 'number'] : false,
-            ['value', 'safe']
+            ['value', 'safe'],
         ]);
+    }
+
+    public function variantsList()
+    {
+        return $this->_characteristics->variants;
     }
 
     public function attributeLabels(): array
@@ -52,5 +58,6 @@ class ValueForm extends Model
     {
         return $this->_characteristics->id;
     }
+
 
 }

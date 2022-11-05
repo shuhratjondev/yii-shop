@@ -7,8 +7,7 @@
 namespace shop\forms\manage\Shop\Product;
 
 
-use shop\forms\manage\Shop\CategoryForm;
-use shop\forms\manage\MetaForm;
+use shop\entities\Shop\Product\Product;
 use yii\base\Model;
 
 /**
@@ -17,10 +16,8 @@ use yii\base\Model;
  * @author sh_abdurasulov
  * @package shop\forms\manage\Shop\Product
  *
- * @property MetaForm $meta
- * @property CategoryForm $categories
- * @property TagsForm $tags
- * @property ValueForm[] $values
+ * @property $old
+ * @property $new
  */
 class PriceForm extends Model
 {
