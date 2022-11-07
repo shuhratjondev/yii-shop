@@ -1,13 +1,17 @@
 <?php
 
+use shop\entities\Shop\Product\Modification;
+use shop\entities\Shop\Product\Photo;
 use shop\entities\Shop\Product\Value;
 use shop\helpers\PriceHelper;
+use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $product shop\entities\Shop\Product\Product */
+/* @var $modificationDataProvider \yii\data\ActiveDataProvider */
 
 $this->title = $product->name;
 $this->params['breadcrumbs'][] = ['label' => 'Products', 'url' => ['index']];
@@ -45,10 +49,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             'name',
                             'code',
                             [
-                                'attribute' => 'description',
-                                'format' => 'ntext',
-                            ],
-                            [
                                 'attribute' => 'price_new',
                                 'value' => PriceHelper::format($product->price_new),
                             ],
@@ -80,7 +80,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="box-body">
                     <?= DetailView::widget([
                         'model' => $product,
-                        'attributes' => array_map(function (Value $value){
+                        'attributes' => array_map(function (Value $value) {
                             return [
                                 'label' => $value->characteristic->name,
                                 'value' => $value->value,
@@ -96,6 +96,52 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="box-header with-border">Description</div>
         <div class="box-body">
             <?= Yii::$app->formatter->asNtext($product->description) ?>
+        </div>
+    </div>
+
+    <div class="box box-default">
+        <div class="box-header with-border">Modifications</div>
+        <div class="box-body">
+            <p>
+                <?= Html::a('Add Modification', ['shop/modification/create', 'product_id' => $product->id], ['class' => 'btn btn-success']) ?>
+            </p>
+            <?= GridView::widget([
+                'dataProvider' => $modificationDataProvider,
+                'columns' => [
+                    'code',
+                    'name',
+                    [
+                        'attribute' => 'price',
+                        'value' => function (Modification $model) {
+                            return PriceHelper::format($model->price);
+                        },
+                    ],
+                    [
+                        'class' => \yii\grid\ActionColumn::class,
+                        'controller' => 'shop/modification',
+                        'template' => '{update} {delete}',
+                    ]
+                ]
+            ]) ?>
+        </div>
+    </div>
+
+    <div class="box box-default">
+        <div class="box-header with-border">Photos</div>
+        <div class="box-body">
+            <div class="row">
+                <?php foreach ($product->photos as $photo): ?>
+                    <div class="col-md-2 col-xs-3" style="">
+                        <div>
+                            <?= Html::a(
+                                Html::img($photo->getThumbFileUrl('file', 'thumb')),
+                                $photo->getUploadedFileUrl('file'),
+                                ['class' => 'thumbnail', 'target' => '_blank']
+                            ) ?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
         </div>
     </div>
 

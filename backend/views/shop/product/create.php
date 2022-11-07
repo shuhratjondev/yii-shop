@@ -73,20 +73,18 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <?php if (1): ?>
-        <div class="box box-default">
-            <div class="box-header with-border">Characteristic</div>
-            <div class="box-body">
-                <?php foreach ($model->values as $i => $value): ?>
-                    <?php if ($variants = $value->variantsList()): ?>
-                        <?= $form->field($model->values[$i], "[$i]value")->dropDownList($variants, ['prompt' => 'Select ...']) ?>
-                    <?php else: ?>
-                        <?= $form->field($model->values[$i], "[$i]value")->textInput() ?>
-                    <?php endif ?>
-                <?php endforeach; ?>
-            </div>
+    <div class="box box-default">
+        <div class="box-header with-border">Characteristic</div>
+        <div class="box-body">
+            <?php foreach ($model->values as $i => $value): ?>
+                <?php if ($variants = $value->variantsList()): ?>
+                    <?= $form->field($model->values[$i], "[$i]value")->dropDownList($variants, ['prompt' => 'Select ...']) ?>
+                <?php else: ?>
+                    <?= $form->field($model->values[$i], "[$i]value")->textInput() ?>
+                <?php endif ?>
+            <?php endforeach; ?>
         </div>
-    <?php endif; ?>
+    </div>
 
     <div class="box box-default">
         <div class="box-header with-border">Photos</div>

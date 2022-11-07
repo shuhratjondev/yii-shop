@@ -2,6 +2,7 @@
 
 namespace backend\controllers\shop;
 
+use shop\entities\Shop\Product\Modification;
 use shop\forms\manage\Shop\Product\PriceForm;
 use shop\forms\manage\Shop\Product\ProductCreateForm;
 use shop\forms\manage\Shop\Product\ProductEditForm;
@@ -9,6 +10,7 @@ use shop\services\manage\Shop\ProductManageService;
 use Yii;
 use shop\entities\Shop\Product\Product;
 use backend\forms\shop\ProductSearch;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\db\StaleObjectException;
@@ -70,8 +72,20 @@ class ProductController extends Controller
     public function actionView($id)
     {
         $product = $this->findModel($id);
+        $modificationDataProvider = new ActiveDataProvider([
+            'query' => $product->getModifications()->orderBy('name'),
+            'key' => function (Modification $modification) use ($product) {
+                return [
+                    'product_id' => $product->id,
+                    'id' => $modification->id,
+                ];
+            },
+            'pagination' => false,
+        ]);
+
         return $this->render('view', [
             'product' => $product,
+            'modificationDataProvider' => $modificationDataProvider
         ]);
     }
 

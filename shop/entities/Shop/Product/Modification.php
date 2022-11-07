@@ -40,7 +40,7 @@ class Modification extends ActiveRecord
         $this->price = $price;
     }
 
-    public function isIdEqualTo($id): bool
+    public function isIdEqualTo(int $id): bool
     {
         return $this->id === $id;
     }

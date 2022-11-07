@@ -4,7 +4,6 @@
 namespace shop\entities\Shop\Product;
 
 
-use yii\behaviors\SluggableBehavior;
 use yii\db\ActiveRecord;
 use yii\web\UploadedFile;
 

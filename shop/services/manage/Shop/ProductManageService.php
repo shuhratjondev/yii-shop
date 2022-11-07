@@ -8,6 +8,7 @@ use shop\entities\Meta;
 use shop\entities\Shop\Product\Product;
 use shop\entities\Shop\Tag;
 use shop\forms\manage\Shop\Product\CategoriesForm;
+use shop\forms\manage\Shop\Product\ModificationForm;
 use shop\forms\manage\Shop\Product\PhotosForm;
 use shop\forms\manage\Shop\Product\PriceForm;
 use shop\forms\manage\Shop\Product\ProductCreateForm;
@@ -85,6 +86,11 @@ class ProductManageService
 
         // photos
         foreach ($form->photos->files as $photo) {
+//            echo "<pre>";
+//            var_dump($photo);
+//            echo "</pre>";
+//            die();
+
             $product->addPhoto($photo);
         }
 
@@ -208,6 +214,29 @@ class ProductManageService
         $this->products->save($product);
     }
 
+
+    public function addModification($id, ModificationForm $form)
+    {
+        $product = $this->products->get($id);
+        $product->addModifications($form->code, $form->name, $form->price);
+        $this->products->save($product);
+    }
+
+    public function editModification($id, $modification_id, ModificationForm $form)
+    {
+        $product = $this->products->get($id);
+        $modification = $product->getModification($modification_id);
+        $product->editModifications($modification->id, $form->code, $form->name, $form->price);
+        $this->products->save($product);
+    }
+
+    public function removeModification($id, $modification_id)
+    {
+        $product = $this->products->get($id);
+        $modification = $product->getModification($modification_id);
+        $product->removeModification($modification->id);
+        $this->products->save($product);
+    }
 
     /**
      * @throws \yii\db\StaleObjectException

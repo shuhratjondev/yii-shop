@@ -140,6 +140,19 @@ class Product extends ActiveRecord
         throw new \DomainException("Modification is not found");
     }
 
+    public function removeModification($id): void
+    {
+        $modifications = $this->modifications;
+        foreach ($modifications as $i => $modification) {
+            if ($modification->isIdEqualTo($id)) {
+                unset($modifications[$i]);
+                $this->modifications = $modifications;
+                return;
+            }
+        }
+        throw new \DomainException('Modification is not found');
+    }
+
 
     // Review
     public function addReview($userId, $vote, $text): void
