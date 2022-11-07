@@ -2,10 +2,12 @@
 
 namespace backend\forms\Shop;
 
+use shop\entities\Shop\Category;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use shop\entities\Shop\Product\Product;
+use yii\helpers\ArrayHelper;
 
 /**
  * ProductSearch represents the model behind the search form of `shop\entities\Shop\Product\Product`.
@@ -91,4 +93,12 @@ class ProductSearch extends Model
 
         return $dataProvider;
     }
+
+    public function categoriesList(): array
+    {
+        return ArrayHelper::map(Category::find()->where(['>', 'depth', 0])->orderBy('lft')->all(), 'id', function (Category $model) {
+            return ($model->depth > 1 ? str_repeat('--', $model->depth - 1) . ' ' : '') . $model->name;
+        });
+    }
+
 }

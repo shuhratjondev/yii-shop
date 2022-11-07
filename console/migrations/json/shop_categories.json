@@ -1,0 +1,123 @@
+[
+  {
+    "id": 2,
+    "name": "Elektr jihozlari",
+    "slug": "elektr_jihozlari",
+    "title": "Elektr jihozlari",
+    "description": "",
+    "meta_json": "\"{\\\"title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\"}\"",
+    "lft": 2,
+    "rgt": 23,
+    "depth": 1
+  },
+  {
+    "id": 3,
+    "name": "Telefonlar",
+    "slug": "telefonlar",
+    "title": "",
+    "description": "",
+    "meta_json": "\"{\\\"title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\"}\"",
+    "lft": 15,
+    "rgt": 20,
+    "depth": 2
+  },
+  {
+    "id": 4,
+    "name": "Audiotexnika",
+    "slug": "audiotexnika",
+    "title": "",
+    "description": "",
+    "meta_json": "\"{\\\"title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\"}\"",
+    "lft": 21,
+    "rgt": 22,
+    "depth": 2
+  },
+  {
+    "id": 5,
+    "name": "Kompyuterlar",
+    "slug": "kompyuterlar",
+    "title": "",
+    "description": "",
+    "meta_json": "\"{\\\"title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\"}\"",
+    "lft": 3,
+    "rgt": 14,
+    "depth": 2
+  },
+  {
+    "id": 6,
+    "name": "Stolga qo'yiladigan",
+    "slug": "stolga_qoyiladigan",
+    "title": "",
+    "description": "",
+    "meta_json": "\"{\\\"title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\"}\"",
+    "lft": 4,
+    "rgt": 5,
+    "depth": 3
+  },
+  {
+    "id": 7,
+    "name": "Noutbuklar",
+    "slug": "noutbuklar",
+    "title": "",
+    "description": "",
+    "meta_json": "\"{\\\"title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\"}\"",
+    "lft": 6,
+    "rgt": 7,
+    "depth": 3
+  },
+  {
+    "id": 8,
+    "name": "Planshet Kompyuterlar",
+    "slug": "planshet_kompyuterlar",
+    "title": "",
+    "description": "",
+    "meta_json": "\"{\\\"title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\"}\"",
+    "lft": 8,
+    "rgt": 9,
+    "depth": 3
+  },
+  {
+    "id": 9,
+    "name": "Serverlar",
+    "slug": "serverlar",
+    "title": "",
+    "description": "",
+    "meta_json": "\"{\\\"title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\"}\"",
+    "lft": 10,
+    "rgt": 11,
+    "depth": 3
+  },
+  {
+    "id": 10,
+    "name": "Aksessuarlar",
+    "slug": "aksessuarlar",
+    "title": "",
+    "description": "",
+    "meta_json": "\"{\\\"title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\"}\"",
+    "lft": 12,
+    "rgt": 13,
+    "depth": 3
+  },
+  {
+    "id": 11,
+    "name": "Mobil telefonlar",
+    "slug": "mobil_telefonlar",
+    "title": "",
+    "description": "",
+    "meta_json": "\"{\\\"title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\"}\"",
+    "lft": 16,
+    "rgt": 17,
+    "depth": 3
+  },
+  {
+    "id": 12,
+    "name": "Statsionar telefonlar",
+    "slug": "statsionar_telefonlar",
+    "title": "",
+    "description": "",
+    "meta_json": "\"{\\\"title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\"}\"",
+    "lft": 18,
+    "rgt": 19,
+    "depth": 3
+  }
+]

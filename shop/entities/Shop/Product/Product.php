@@ -12,6 +12,7 @@ use shop\entities\Shop\Category;
 use shop\entities\Shop\Tag;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 
 /**
@@ -411,7 +412,7 @@ class Product extends ActiveRecord
 
     public function getPhotos(): ActiveQuery
     {
-        return $this->hasMany(Photo::class, ['product_id' => 'id']);
+        return $this->hasMany(Photo::class, ['product_id' => 'id'])->orderBy('sort');
     }
 
     public function getTagAssignments(): ActiveQuery
@@ -421,7 +422,7 @@ class Product extends ActiveRecord
 
     public function getTags()
     {
-        return $this->hasMany(Category::class, ['id' => 'tag_id'])->via('tagAssignments');
+        return $this->hasMany(Tag::class, ['id' => 'tag_id'])->via('tagAssignments');
     }
 
     public function getRelatedAssignments(): ActiveQuery

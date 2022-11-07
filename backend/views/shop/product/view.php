@@ -1,17 +1,22 @@
 <?php
 
 use shop\entities\Shop\Product\Modification;
-use shop\entities\Shop\Product\Photo;
+use shop\entities\Shop\Product\Product;
 use shop\entities\Shop\Product\Value;
+use shop\forms\manage\Shop\Product\PhotosForm;
 use shop\helpers\PriceHelper;
+use yii\data\ActiveDataProvider;
+use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $product shop\entities\Shop\Product\Product */
-/* @var $modificationDataProvider \yii\data\ActiveDataProvider */
+/* @var $product Product */
+/* @var $modificationDataProvider ActiveDataProvider */
+/* @var $photosForm PhotosForm */
 
 $this->title = $product->name;
 $this->params['breadcrumbs'][] = ['label' => 'Products', 'url' => ['index']];
@@ -66,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             [
                                 'label' => 'Tags',
-                                'value' => implode(', ', ArrayHelper::getColumn($product->tags, 'name'))
+                                'value' => implode(', ', ArrayHelper::getColumn($product->tags, 'name')),
                             ],
                             'created_at:datetime',
                         ],
@@ -117,7 +122,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                     ],
                     [
-                        'class' => \yii\grid\ActionColumn::class,
+                        'class' => ActionColumn::class,
                         'controller' => 'shop/modification',
                         'template' => '{update} {delete}',
                     ]
@@ -126,12 +131,26 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <div class="box box-default">
+    <div class="box box-default" id="photos" name="photos">
         <div class="box-header with-border">Photos</div>
         <div class="box-body">
             <div class="row">
                 <?php foreach ($product->photos as $photo): ?>
-                    <div class="col-md-2 col-xs-3" style="">
+                    <div class="col-md-2 col-xs-3" style="text-align: center">
+                        <div class="btn-group">
+                            <?= Html::a('<span class="glyphicon glyphicon-arrow-left"></span>',
+                                ['move-photo-up', 'id' => $product->id, 'photo_id' => $photo->id],
+                                ['class' => 'btn btn-default', 'data-method' => 'post']
+                            ) ?>
+                            <?= Html::a('<span class="glyphicon glyphicon-remove"></span>',
+                                ['move-photo-delete', 'id' => $product->id, 'photo_id' => $photo->id,],
+                                ['class' => 'btn btn-default', 'data-method' => 'post', 'data-confirm' => 'Remove photo?']
+                            ) ?>
+                            <?= Html::a('<span class="glyphicon glyphicon-arrow-right"></span>',
+                                ['move-photo-down', 'id' => $product->id, 'photo_id' => $photo->id],
+                                ['class' => 'btn btn-default', 'data-method' => 'post'],
+                            ) ?>
+                        </div>
                         <div>
                             <?= Html::a(
                                 Html::img($photo->getThumbFileUrl('file', 'thumb')),
@@ -142,6 +161,23 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                 <?php endforeach; ?>
             </div>
+
+            <?php $form = ActiveForm::begin([
+                'options' => ['enctype' => 'multipart/form-data']
+            ]) ?>
+
+            <?= $form->field($photosForm, 'files[]')->label(false)->widget(\kartik\file\FileInput::class, [
+                'options' => [
+                    'accept' => 'image/*',
+                    'multiple' => true
+                ]
+            ]) ?>
+
+            <div class="form-group">
+                <?= Html::submitButton('Upload', ['class' => 'btn btn-success']) ?>
+            </div>
+
+            <?php $form::end(); ?>
         </div>
     </div>
 

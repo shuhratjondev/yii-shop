@@ -1,5 +1,8 @@
 <?php
 
+use shop\entities\Shop\Product\Product;
+use shop\helpers\PriceHelper;
+use shop\helpers\ProductHelper;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
@@ -24,19 +27,28 @@ $this->params['breadcrumbs'][] = $this->title;
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
 
-                'id',
+                //'id',
 
-                'category_id',
-                'brand_id',
                 'main_photo_id',
-                'code',
-                // 'name',
-                // 'description:ntext',
-                // 'price_old',
-                // 'price_new',
-                // 'rating',
-                // 'meta_json:ntext',
-                // 'created_at',
+                //'code',
+                [
+                    'attribute' => 'name',
+                    'value' => static function(Product $model){
+                        return Html::a(Html::encode($model->name), ['view', 'id' => $model->id]);
+                    },
+                    'format' => 'raw',
+                ],
+                [
+                    'attribute' => 'category_id',
+                    'value' => 'category.name',
+                    'filter' => $searchModel->categoriesList(),
+                ],
+                [
+                    'attribute' => 'price_new',
+                    'value' => static function (Product $model) {
+                        return PriceHelper::format($model->price_new);
+                    },
+                ],
 
                 ['class' => 'yii\grid\ActionColumn'],
             ],

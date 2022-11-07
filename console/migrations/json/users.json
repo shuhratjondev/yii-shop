@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "username": "shuhratjon1998",
+    "auth_key": "e5W63_ELAq6y4achThpOehl8oCgkZeqf",
+    "password_hash": "$2y$13$F9byoJDdjMKm8LlTzqScc.yV0H.GvZNx.iM3attEZRr6DZBdrxN1S",
+    "password_reset_token": null,
+    "email": "abdurasulovshuhratjon1998@gmail.com",
+    "status": 10,
+    "created_at": 1667799641,
+    "updated_at": 1667799641,
+    "verification_token": "dJFLooRymzOeuNA1dSkp2KJktYmMb4DL_1667799641"
+  }
+]

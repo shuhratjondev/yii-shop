@@ -18,6 +18,7 @@ use shop\repositories\Shop\CategoryRepository;
 use shop\repositories\Shop\Product\ProductRepository;
 use shop\repositories\Shop\TagRepository;
 use shop\services\TransactionManager;
+use yii\helpers\ArrayHelper;
 
 class ProductManageService
 {
@@ -86,11 +87,6 @@ class ProductManageService
 
         // photos
         foreach ($form->photos->files as $photo) {
-//            echo "<pre>";
-//            var_dump($photo);
-//            echo "</pre>";
-//            die();
-
             $product->addPhoto($photo);
         }
 
@@ -123,6 +119,7 @@ class ProductManageService
     {
         $product = $this->products->get($id);
         $brand = $this->brands->get($form->brandId);
+        $category = $this->categories->get($form->categories->main);
 
         $product->edit(
             $brand->id,
@@ -136,12 +133,19 @@ class ProductManageService
             )
         );
 
+        $product->changeMainCategory($category->id);
+
+        // categories
+        foreach ($form->categories->others as $otherId) {
+            $category = $this->categories->get($otherId);
+            $product->assignCategory($category->id);
+        }
+
         // characteristic values
         foreach ($form->values as $value) {
             $product->setValue($value->id, $value->value);
         }
 
-        $product->revokeTags();
 
         // existing tags
         foreach ($form->tags->existing as $tagId) {
@@ -158,7 +162,10 @@ class ProductManageService
                 }
                 $product->assignTag($tag->id);
             }
+
+            $this->products->save($product);
         });
+
     }
 
     // category

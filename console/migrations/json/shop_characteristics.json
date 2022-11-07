@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Rangi",
+    "type": "string",
+    "required": "0",
+    "default": "Qora",
+    "variants_json": "\"[\\\"Oq\\\",\\\"Qora\\\",\\\"Yashil\\\"]\"",
+    "sort": 1
+  },
+  {
+    "id": 2,
+    "name": "Vazni",
+    "type": "integer",
+    "required": "0",
+    "default": "",
+    "variants_json": "\"[]\"",
+    "sort": 2
+  }
+]

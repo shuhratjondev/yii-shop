@@ -3,6 +3,7 @@
 namespace backend\controllers\shop;
 
 use shop\entities\Shop\Product\Modification;
+use shop\forms\manage\Shop\Product\PhotosForm;
 use shop\forms\manage\Shop\Product\PriceForm;
 use shop\forms\manage\Shop\Product\ProductCreateForm;
 use shop\forms\manage\Shop\Product\ProductEditForm;
@@ -83,9 +84,21 @@ class ProductController extends Controller
             'pagination' => false,
         ]);
 
+        $photosForm = new PhotosForm();
+        if ($photosForm->load(Yii::$app->request->post()) && $photosForm->validate()) {
+            try {
+                $this->service->addPhotos($product->id, $photosForm);
+                return $this->redirect(['view', 'id' => $product->id]);
+            } catch (\Exception $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
+        }
+
         return $this->render('view', [
             'product' => $product,
-            'modificationDataProvider' => $modificationDataProvider
+            'modificationDataProvider' => $modificationDataProvider,
+            'photosForm' => $photosForm
         ]);
     }
 
@@ -105,14 +118,6 @@ class ProductController extends Controller
                 return $this->redirect(['view', 'id' => $model->id]);
             } catch (\Exception $e) {
                 Yii::$app->errorHandler->logException($e);
-                echo "<pre>";
-                var_dump($e->getMessage());
-                var_dump($e->getFile());
-                var_dump($e->getLine());
-                var_dump($e->getTraceAsString());
-                echo "</pre>";
-                die();
-
                 Yii::$app->session->setFlash('error', $e->getMessage());
             }
         }
@@ -192,7 +197,7 @@ class ProductController extends Controller
      * @param $photo_id
      * @return \yii\web\Response
      */
-    public function actionMoveUpPhoto($id, $photo_id)
+    public function actionMovePhotoUp($id, $photo_id)
     {
         $this->service->movePhotoUp($id, $photo_id);
         return $this->redirect(['view', 'id' => $id, '#' => 'photos']);
@@ -203,9 +208,10 @@ class ProductController extends Controller
      * @param $photo_id
      * @return \yii\web\Response
      */
-    public function actionMoveDownPhoto($id, $photo_id)
+    public function actionMovePhotoDown($id, $photo_id)
     {
         $this->service->movePhotoDown($id, $photo_id);
+
         return $this->redirect(['view', 'id' => $id, '#' => 'photos']);
     }
 

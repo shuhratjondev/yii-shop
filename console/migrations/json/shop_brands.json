@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Lenovo",
+    "slug": "lenovo",
+    "meta_json": "\"{\\\"title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\"}\""
+  },
+  {
+    "id": 2,
+    "name": "Dell",
+    "slug": "dell",
+    "meta_json": "\"{\\\"title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\"}\""
+  },
+  {
+    "id": 3,
+    "name": "Samsung",
+    "slug": "samsung",
+    "meta_json": "\"{\\\"title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\"}\""
+  },
+  {
+    "id": 4,
+    "name": "Nokia",
+    "slug": "nokia",
+    "meta_json": "\"{\\\"title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\"}\""
+  },
+  {
+    "id": 5,
+    "name": "Iphone",
+    "slug": "iphone",
+    "meta_json": "\"{\\\"title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\"}\""
+  }
+]

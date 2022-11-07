@@ -19,15 +19,17 @@
         "yiisoft/yii2-bootstrap4": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
         "dmstr/yii2-adminlte-asset": "^2.1",
+        "yiisoft/yii2-authclient": "^2.2",
         "webmozart/assert": "^1.11",
         "la-haute-societe/yii2-save-relations-behavior": "*",
-        "yiisoft/yii2-authclient": "^2.2",
         "kartik-v/yii2-widget-datepicker": "@dev",
         "kartik-v/yii2-field-range": "*",
+        "kartik-v/yii2-widget-fileinput": "dev-master",
         "paulzi/yii2-nested-sets": "^1.1",
-        "ext-json": "*",
         "yii-dream-team/yii2-upload-behavior": "*",
-        "kartik-v/yii2-widget-fileinput": "dev-master"
+        "masterexploder/phpthumb": "^2.1",
+        "ext-json": "*",
+        "ext-gd": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
@@ -53,6 +55,10 @@
         {
             "type": "composer",
             "url": "https://asset-packagist.org"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/monter08/PHPThumb"
         }
     ]
 }

@@ -25,7 +25,7 @@ class TagsForm extends Model
     /**
      * @var array
      */
-    public array $existing = [];
+    public $existing = [];
     /**
      * @var
      */
