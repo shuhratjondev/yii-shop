@@ -29,7 +29,11 @@
         "yii-dream-team/yii2-upload-behavior": "*",
         "masterexploder/phpthumb": "^2.1",
         "ext-json": "*",
-        "ext-gd": "*"
+        "ext-gd": "*",
+        "fortawesome/font-awesome": "v4.7",
+        "bower-asset/font-awesome": "^6.2",
+        "npm-asset/font-awesome": "v4.7",
+        "bower-asset/owl.carousel": "^2.3"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

@@ -18,6 +18,7 @@ use yii\web\Controller;
 
 class SignupController extends Controller
 {
+    public $layout = 'cabinet';
 
     private SignupService $signupService;
 

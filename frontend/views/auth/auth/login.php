@@ -14,10 +14,19 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="site-login">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out the following fields to login:</p>
-
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col-sm-6">
+            <div class="well">
+                <h2>New Customer</h2>
+                <p><strong>Register Account</strong></p>
+                <p>By creating an account you will be able to shop faster, be up to date on an order's status, and keep
+                    track of the orders you have previously made.</p>
+                <a href="http://opencart-3/upload/index.php?route=account/register" class="btn btn-primary">Continue</a>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <p>Please fill out the following fields to login:</p>
+
             <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
             <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
@@ -41,6 +50,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= \yii\authclient\widgets\AuthChoice::widget([
                 'baseAuthUrl' => ['auth/network/auth']
             ]) ?>
+
         </div>
     </div>
+
+
 </div>

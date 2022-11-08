@@ -44,6 +44,7 @@ class SiteController extends Controller
      */
     public function actionAbout()
     {
+        $this->layout = 'blank';
         return $this->render('about');
     }
 
