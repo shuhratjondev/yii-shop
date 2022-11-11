@@ -26,6 +26,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="box-header">
         <?= Html::a('List', ['index'], ['class' => 'btn btn-info']) ?>
         <?= Html::a('Create', ['create'], ['class' => 'btn btn-success']) ?>
+        <?php if ($product->isActive()): ?>
+            <?= Html::a('Draft', ['draft', 'id' => $product->id], ['class' => 'btn btn-primary', 'data-method' => 'post']) ?>
+        <?php else: ?>
+            <?= Html::a('Activate', ['activate', 'id' => $product->id], ['class' => 'btn btn-success', 'data-method' => 'post']) ?>
+        <?php endif; ?>
         <?= Html::a('Update', ['update', 'id' => $product->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $product->id], [
             'class' => 'btn btn-danger',

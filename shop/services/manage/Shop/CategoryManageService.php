@@ -45,6 +45,7 @@ class CategoryManageService
         /* @var Category $category */
         $category = $this->categories->get($id);
         $this->assertIsNotRoot($category);
+        $parent = $this->categories->get($form->parentId);
         $category->edit(
             $form->name,
             $form->slug,
@@ -56,7 +57,7 @@ class CategoryManageService
                 $form->meta->keywords
             ),
         );
-
+        $category->appendTo($parent);
         $this->categories->save($category);
     }
 

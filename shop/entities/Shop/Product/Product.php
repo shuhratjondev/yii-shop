@@ -9,6 +9,7 @@ use shop\entities\behaviors\MetaBehavior;
 use shop\entities\Meta;
 use shop\entities\Shop\Brand;
 use shop\entities\Shop\Category;
+use shop\entities\Shop\Product\queries\ProductQuery;
 use shop\entities\Shop\Tag;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -27,6 +28,7 @@ use yii\web\UploadedFile;
  * @property integer $price_new
  * @property integer $rating
  * @property integer $meta_json
+ * @property integer $status
  * @property integer $created_at
  *
  * @property Meta $meta
@@ -36,6 +38,7 @@ use yii\web\UploadedFile;
  * @property Category[] $categories
  * @property Value[] $values
  * @property Photo[] $photos
+ * @property Photo $mainPhoto
  * @property TagAssignment[] $tagAssignments
  * @property Tag[] $tags
  * @property RelatedProduct[] $relatedAssignments
@@ -44,6 +47,9 @@ use yii\web\UploadedFile;
  */
 class Product extends ActiveRecord
 {
+    public const STATUS_DRAFT = 0;
+    public const STATUS_ACTIVE = 1;
+
     public Meta $meta;
 
     public static function create($brandId, $categoryId, $code, $name, $description, Meta $meta): self
@@ -55,6 +61,7 @@ class Product extends ActiveRecord
         $product->name = $name;
         $product->description = $description;
         $product->meta = $meta;
+        $product->status = self::STATUS_DRAFT;
         $product->created_at = time();
         return $product;
     }
@@ -79,6 +86,31 @@ class Product extends ActiveRecord
         $this->category_id = $categoryId;
     }
 
+    public function activate(): void
+    {
+        if ($this->isActive()) {
+            throw new \DomainException('Product is already active.');
+        }
+        $this->status = self::STATUS_ACTIVE;
+    }
+
+    public function draft(): void
+    {
+        if ($this->isDraft()) {
+            throw new \DomainException('Product is already draft.');
+        }
+        $this->status = self::STATUS_DRAFT;
+    }
+
+    public function isActive(): bool
+    {
+        return (int)$this->status === self::STATUS_ACTIVE;
+    }
+
+    public function isDraft(): bool
+    {
+        return (int)$this->status === self::STATUS_DRAFT;
+    }
 
     // Value
     public function setValue($id, $value): void
@@ -349,6 +381,7 @@ class Product extends ActiveRecord
             $photo->setSort($i);
         }
         $this->photos = $photos;
+        $this->populateRelation('mainPhoto', reset($photos));
     }
 
     // Related products
@@ -410,6 +443,11 @@ class Product extends ActiveRecord
         return $this->hasMany(Modification::class, ['product_id' => 'id']);
     }
 
+    public function getMainPhoto(): ActiveQuery
+    {
+        return $this->hasOne(Photo::class, ['id' => 'main_photo_id']);
+    }
+
     public function getPhotos(): ActiveQuery
     {
         return $this->hasMany(Photo::class, ['product_id' => 'id'])->orderBy('sort');
@@ -460,5 +498,34 @@ class Product extends ActiveRecord
         ];
     }
 
+    /**
+     * @throws \yii\db\StaleObjectException
+     * @throws \Throwable
+     */
+    public function beforeDelete()
+    {
+        if (parent::beforeDelete()) {
+            foreach ($this->photos as $photo) {
+                $photo->delete();
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        $related = $this->getRelatedRecords();
+        parent::afterSave($insert, $changedAttributes);
+        if (array_key_exists('mainPhoto', $related)) {
+            $this->updateAttributes(['main_photo_id' => $related['mainPhoto'] ? $related['mainPhoto']->id : null]);
+        }
+    }
+
+
+    public static function find()
+    {
+        return new ProductQuery(static::class);
+    }
 
 }

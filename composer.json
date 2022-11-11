@@ -33,7 +33,8 @@
         "fortawesome/font-awesome": "v4.7",
         "bower-asset/font-awesome": "^6.2",
         "npm-asset/font-awesome": "v4.7",
-        "bower-asset/owl.carousel": "^2.3"
+        "bower-asset/owl.carousel": "^2.3",
+        "yiisoft/yii2-bootstrap": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

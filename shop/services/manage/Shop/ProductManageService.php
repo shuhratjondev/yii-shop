@@ -135,26 +135,30 @@ class ProductManageService
 
         $product->changeMainCategory($category->id);
 
-        // categories
-        foreach ($form->categories->others as $otherId) {
-            $category = $this->categories->get($otherId);
-            $product->assignCategory($category->id);
-        }
-
-        // characteristic values
-        foreach ($form->values as $value) {
-            $product->setValue($value->id, $value->value);
-        }
-
-
-        // existing tags
-        foreach ($form->tags->existing as $tagId) {
-            $tag = $this->tags->findById($tagId);
-            $product->assignTag($tag->id);
-        }
-
-        // new tags
         $this->transaction->wrap(function () use ($product, $form) {
+
+            $product->revokeTags();
+            $product->save();
+
+            // categories
+            foreach ($form->categories->others as $otherId) {
+                $category = $this->categories->get($otherId);
+                $product->assignCategory($category->id);
+            }
+
+            // characteristic values
+            foreach ($form->values as $value) {
+                $product->setValue($value->id, $value->value);
+            }
+
+
+            // existing tags
+            foreach ($form->tags->existing as $tagId) {
+                $tag = $this->tags->findById($tagId);
+                $product->assignTag($tag->id);
+            }
+
+            // new tags
             foreach ($form->tags->newNames as $tagName) {
                 if (!$tag = $this->tags->findByName($tagName)) {
                     $tag = Tag::create($tagName, $tagName);
@@ -167,6 +171,21 @@ class ProductManageService
         });
 
     }
+
+    public function activate($id): void
+    {
+        $product = $this->products->get($id);
+        $product->activate();
+        $this->products->save($product);
+    }
+
+    public function draft($id): void
+    {
+        $product = $this->products->get($id);
+        $product->draft();
+        $this->products->save($product);
+    }
+
 
     // category
     public function changeCategories($id, CategoriesForm $form): void

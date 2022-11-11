@@ -6,6 +6,7 @@ use shop\helpers\ProductHelper;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+
 /* @var $this yii\web\View */
 /* @var $searchModel backend\forms\Shop\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -29,11 +30,17 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 //'id',
 
-                'main_photo_id',
+                [
+                    'value' => function (Product $model) {
+                        return $model->mainPhoto ? Html::img($model->mainPhoto->getThumbFileUrl('file', 'admin')) : null;
+                    },
+                    'format' => 'raw',
+                    'contentOptions' => ['style' => 'width: 100px'],
+                ],
                 //'code',
                 [
                     'attribute' => 'name',
-                    'value' => static function(Product $model){
+                    'value' => static function (Product $model) {
                         return Html::a(Html::encode($model->name), ['view', 'id' => $model->id]);
                     },
                     'format' => 'raw',
@@ -48,6 +55,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => static function (Product $model) {
                         return PriceHelper::format($model->price_new);
                     },
+                ],
+                [
+                    'attribute' => 'status',
+                    'value' => static function (Product $model) {
+                        return ProductHelper::statusLabel($model->status);
+                    },
+                    'format' => 'raw'
                 ],
 
                 ['class' => 'yii\grid\ActionColumn'],
