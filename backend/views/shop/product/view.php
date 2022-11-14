@@ -148,7 +148,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ['class' => 'btn btn-default', 'data-method' => 'post']
                             ) ?>
                             <?= Html::a('<span class="glyphicon glyphicon-remove"></span>',
-                                ['move-photo-delete', 'id' => $product->id, 'photo_id' => $photo->id,],
+                                ['delete-photo', 'id' => $product->id, 'photo_id' => $photo->id,],
                                 ['class' => 'btn btn-default', 'data-method' => 'post', 'data-confirm' => 'Remove photo?']
                             ) ?>
                             <?= Html::a('<span class="glyphicon glyphicon-arrow-right"></span>',

@@ -62,6 +62,17 @@ class Category extends ActiveRecord
         $this->meta = $meta;
     }
 
+    public function getSeoTitle(): string
+    {
+        return $this->meta->title ?: $this->getHeadingTitle();
+    }
+
+    public function getHeadingTitle(): string
+    {
+        return $this->title ?: $this->name;
+    }
+
+
     ############################################################
 
     public static function tableName(): string

@@ -11,7 +11,7 @@
   {
     "id": 2,
     "name": "Vazni",
-    "type": "integer",
+    "type": "float",
     "required": "0",
     "default": "",
     "variants_json": "\"[]\"",

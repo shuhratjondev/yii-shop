@@ -29,7 +29,7 @@ class ProductReadRepository
         $ids = ArrayHelper::merge([$category->id], $category->getLeaves()->select('id')->column());
         $query->joinWith(['categoryAssignments ca'], false);
         $query->andWhere(['or', ['p.category_id' => $ids], ['ca.category_id' => $ids]]);
-        $query->orderBy(['p.id']);
+        $query->orderBy('p.id');
         return $this->getProvider($query);
     }
 
@@ -43,10 +43,15 @@ class ProductReadRepository
     public function getAllByTag(Tag $tag): ActiveDataProvider
     {
         $query = Product::find()->alias('p')->active('p')->with('mainPhoto');
-        $query->joinWith(['tagAssignment ta'], false);
+        $query->joinWith(['tagAssignments ta'], false);
         $query->andWhere(['ta.tag_id' => $tag->id]);
         $query->orderBy('p.id');
         return $this->getProvider($query);
+    }
+
+    public function getFeatured($limit)
+    {
+        return Product::find()->active()->with('mainPhoto')->orderBy(['id' => SORT_DESC])->limit($limit)->all();
     }
 
 
@@ -78,8 +83,10 @@ class ProductReadRepository
                         'asc' => ['p.rating' => SORT_ASC],
                         'desc' => ['p.rating' => SORT_DESC],
                     ],
-
                 ]
+            ],
+            'pagination' => [
+                'pageSizeLimit' => [15, 100],
             ]
         ]);
     }

@@ -12,6 +12,10 @@ use shop\entities\Shop\Tag;
 class TagReadRepository
 {
 
+    /**
+     * @param $id
+     * @return array|\yii\db\ActiveRecord|null
+     */
     public function find($id)
     {
         return Tag::find()->andWhere(['id' => $id])->one();

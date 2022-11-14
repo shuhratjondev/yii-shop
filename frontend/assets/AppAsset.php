@@ -23,8 +23,8 @@ class AppAsset extends AssetBundle
         'js/common.js'
     ];
     public $depends = [
-        'frontend\assets\FontAwesomeAsset',
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapPluginAsset',
+        'frontend\assets\FontAwesomeAsset',
     ];
 }
