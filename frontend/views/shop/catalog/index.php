@@ -14,6 +14,7 @@ use yii\web\View;
 
 $this->title = 'Catalog';
 $this->params['breadcrumbs'][] = $this->title;
+$this->params['active_category'] = $category;
 ?>
     <h1><?= Html::encode($this->title) ?></h1>
 

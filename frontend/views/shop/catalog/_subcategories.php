@@ -8,6 +8,7 @@
 use shop\entities\Shop\Category;
 use yii\helpers\Html;
 use yii\helpers\Url;
+
 ?>
 
 <?php if ($category->children): ?>

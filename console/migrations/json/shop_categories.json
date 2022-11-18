@@ -1,13 +1,24 @@
 [
   {
+    "id": 1,
+    "name": "",
+    "slug": "root",
+    "title": null,
+    "description": null,
+    "meta_json": "\"{}\"",
+    "lft": 1,
+    "rgt": 42,
+    "depth": 0
+  },
+  {
     "id": 2,
     "name": "Elektr jihozlari",
     "slug": "elektr_jihozlari",
     "title": "Elektr jihozlari",
     "description": "",
     "meta_json": "\"{\\\"title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\"}\"",
-    "lft": 2,
-    "rgt": 23,
+    "lft": 10,
+    "rgt": 31,
     "depth": 1
   },
   {
@@ -17,8 +28,8 @@
     "title": "",
     "description": "",
     "meta_json": "\"{\\\"title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\"}\"",
-    "lft": 15,
-    "rgt": 20,
+    "lft": 23,
+    "rgt": 28,
     "depth": 2
   },
   {
@@ -28,8 +39,8 @@
     "title": "",
     "description": "",
     "meta_json": "\"{\\\"title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\"}\"",
-    "lft": 21,
-    "rgt": 22,
+    "lft": 29,
+    "rgt": 30,
     "depth": 2
   },
   {
@@ -39,8 +50,8 @@
     "title": "",
     "description": "",
     "meta_json": "\"{\\\"title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\"}\"",
-    "lft": 3,
-    "rgt": 14,
+    "lft": 11,
+    "rgt": 22,
     "depth": 2
   },
   {
@@ -50,8 +61,8 @@
     "title": "",
     "description": "",
     "meta_json": "\"{\\\"title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\"}\"",
-    "lft": 4,
-    "rgt": 5,
+    "lft": 12,
+    "rgt": 13,
     "depth": 3
   },
   {
@@ -61,8 +72,8 @@
     "title": "",
     "description": "",
     "meta_json": "\"{\\\"title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\"}\"",
-    "lft": 6,
-    "rgt": 7,
+    "lft": 14,
+    "rgt": 15,
     "depth": 3
   },
   {
@@ -72,8 +83,8 @@
     "title": "",
     "description": "",
     "meta_json": "\"{\\\"title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\"}\"",
-    "lft": 8,
-    "rgt": 9,
+    "lft": 16,
+    "rgt": 17,
     "depth": 3
   },
   {
@@ -83,8 +94,8 @@
     "title": "",
     "description": "",
     "meta_json": "\"{\\\"title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\"}\"",
-    "lft": 10,
-    "rgt": 11,
+    "lft": 18,
+    "rgt": 19,
     "depth": 3
   },
   {
@@ -94,8 +105,8 @@
     "title": "",
     "description": "",
     "meta_json": "\"{\\\"title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\"}\"",
-    "lft": 12,
-    "rgt": 13,
+    "lft": 20,
+    "rgt": 21,
     "depth": 3
   },
   {
@@ -105,8 +116,8 @@
     "title": "",
     "description": "",
     "meta_json": "\"{\\\"title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\"}\"",
-    "lft": 16,
-    "rgt": 17,
+    "lft": 24,
+    "rgt": 25,
     "depth": 3
   },
   {
@@ -116,8 +127,107 @@
     "title": "",
     "description": "",
     "meta_json": "\"{\\\"title\\\":\\\"\\\",\\\"description\\\":\\\"\\\",\\\"keywords\\\":\\\"\\\"}\"",
-    "lft": 18,
-    "rgt": 19,
+    "lft": 26,
+    "rgt": 27,
     "depth": 3
+  },
+  {
+    "id": 13,
+    "name": "Bolalar dunyosi",
+    "slug": "bolalar_dunyosi",
+    "title": "Bolalar dunyosi",
+    "description": "Bolalar dunyosi",
+    "meta_json": "\"{\\\"title\\\":\\\"Bolalar dunyosi\\\",\\\"description\\\":\\\"Bolalar dunyosi\\\",\\\"keywords\\\":\\\"Bolalar dunyosi\\\"}\"",
+    "lft": 2,
+    "rgt": 3,
+    "depth": 1
+  },
+  {
+    "id": 14,
+    "name": "Ko'chmas mulk",
+    "slug": "kochmas_mulk",
+    "title": "Ko'chmas mulk",
+    "description": "Ko'chmas mulk",
+    "meta_json": "\"{\\\"title\\\":\\\"Ko'chmas mulk\\\",\\\"description\\\":\\\"Ko'chmas mulk\\\",\\\"keywords\\\":\\\"Ko'chmas mulk\\\"}\"",
+    "lft": 4,
+    "rgt": 5,
+    "depth": 1
+  },
+  {
+    "id": 15,
+    "name": "Transport",
+    "slug": "transport",
+    "title": "Transport",
+    "description": "Transport",
+    "meta_json": "\"{\\\"title\\\":\\\"Transport\\\",\\\"description\\\":\\\"Transport\\\",\\\"keywords\\\":\\\"Transport\\\"}\"",
+    "lft": 6,
+    "rgt": 7,
+    "depth": 1
+  },
+  {
+    "id": 16,
+    "name": "Ish",
+    "slug": "ish",
+    "title": "Ish",
+    "description": "Ish",
+    "meta_json": "\"{\\\"title\\\":\\\"Ish\\\",\\\"description\\\":\\\"Ish\\\",\\\"keywords\\\":\\\"Ish\\\"}\"",
+    "lft": 8,
+    "rgt": 9,
+    "depth": 1
+  },
+  {
+    "id": 17,
+    "name": "Xizmatlar",
+    "slug": "xizmatlar",
+    "title": "Xizmatlar",
+    "description": "Xizmatlar",
+    "meta_json": "\"{\\\"title\\\":\\\"Xizmatlar\\\",\\\"description\\\":\\\"Xizmatlar\\\",\\\"keywords\\\":\\\"Xizmatlar\\\"}\"",
+    "lft": 32,
+    "rgt": 33,
+    "depth": 1
+  },
+  {
+    "id": 18,
+    "name": "Moda va stil",
+    "slug": "moda_va_stil",
+    "title": "Moda va stil",
+    "description": "Moda va stil",
+    "meta_json": "\"{\\\"title\\\":\\\"Moda va stil\\\",\\\"description\\\":\\\"Moda va stil\\\",\\\"keywords\\\":\\\"Moda va stil\\\"}\"",
+    "lft": 34,
+    "rgt": 35,
+    "depth": 1
+  },
+  {
+    "id": 19,
+    "name": "Xobbi, dam olish sport",
+    "slug": "xobbi_dam_olish_sport",
+    "title": "Xobbi, dam olish sport",
+    "description": "Xobbi, dam olish sport",
+    "meta_json": "\"{\\\"title\\\":\\\"Xobbi, dam olish sport\\\",\\\"description\\\":\\\"Xobbi, dam olish sport\\\",\\\"keywords\\\":\\\"\\\"}\"",
+    "lft": 36,
+    "rgt": 37,
+    "depth": 1
+  },
+  {
+    "id": 20,
+    "name": "Tekinga beraman",
+    "slug": "tekinga_beraman",
+    "title": "Tekinga beraman",
+    "description": "Tekinga beraman",
+    "meta_json": "\"{\\\"title\\\":\\\"Tekinga beraman\\\",\\\"description\\\":\\\"Tekinga beraman\\\",\\\"keywords\\\":\\\"Tekinga beraman\\\"}\"",
+    "lft": 38,
+    "rgt": 39,
+    "depth": 1
+  },
+  {
+    "id": 21,
+    "name": " Ayirboshlash",
+    "slug": "ayirboshlash",
+    "title": " Ayirboshlash",
+    "description": " Ayirboshlash",
+    "meta_json": "\"{\\\"title\\\":\\\" Ayirboshlash\\\",\\\"description\\\":\\\" Ayirboshlash\\\",\\\"keywords\\\":\\\" Ayirboshlash\\\"}\"",
+    "lft": 40,
+    "rgt": 41,
+    "depth": 1
   }
 ]

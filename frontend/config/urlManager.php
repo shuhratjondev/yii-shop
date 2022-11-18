@@ -17,6 +17,12 @@ return [
         'signup/<action:[\w-]+>' => 'auth/signup/<action>',
         '<action:login|logout>' => 'auth/auth/<action>',
 
+        'catalog' => 'shop/catalog/index',
+        'catalog/<id:\d+>' => 'shop/catalog/product',
+        [
+            'class' => 'frontend\urls\CategoryUrlRule',
+        ],
+
         //'<action:login|signup|logout>' => 'site/<action>',
 
         '<controller:[\w\-]+>' => '<controller/index>',

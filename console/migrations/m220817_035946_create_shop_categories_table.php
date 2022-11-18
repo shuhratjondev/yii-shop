@@ -26,17 +26,17 @@ class m220817_035946_create_shop_categories_table extends Migration
 
         $this->createIndex('idx-shop_categories-slug', '{{%shop_categories}}', 'slug', true);
 
-        $this->insert('{{%shop_categories}}', [
-            'id' => 1,
-            'name' => '',
-            'slug' => 'root',
-            'title' => null,
-            'description' => null,
-            'meta_json' => '{}',
-            'lft' => 1,
-            'rgt' => 2,
-            'depth' => 0,
-        ]);
+//        $this->insert('{{%shop_categories}}', [
+//            'id' => 1,
+//            'name' => '',
+//            'slug' => 'root',
+//            'title' => null,
+//            'description' => null,
+//            'meta_json' => '{}',
+//            'lft' => 1,
+//            'rgt' => 2,
+//            'depth' => 0,
+//        ]);
 
     }
 
